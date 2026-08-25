@@ -1,0 +1,2 @@
+import Logo from './Logo';
+export default function Header(){return <header className="header"><a className="logo nav-in" href="#top" aria-label="Ampliga home"><Logo /></a><nav aria-label="Primary"><a className="nav-in" href="#work">Work</a><a className="nav-in" href="#services">Services</a><a className="nav-in" href="#about">About</a><a className="nav-in" href="#insights">Insights</a></nav><a className="project-link nav-in" href="#contact">Start a Project <span>↗</span></a><button className="menu-button nav-in" aria-label="Open menu"><i/><i/><i/></button></header>}
