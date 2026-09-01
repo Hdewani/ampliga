@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import ScrollAnimations from '@/components/ScrollAnimations';
+import DesignSwitcher from '@/components/DesignSwitcher';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ampliga.com'),
@@ -15,5 +16,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({children}:{children:React.ReactNode}) {
-  return <html lang="en"><body><ScrollAnimations />{children}</body></html>
+  return <html lang="en"><body><ScrollAnimations /><DesignSwitcher />{children}</body></html>
 }

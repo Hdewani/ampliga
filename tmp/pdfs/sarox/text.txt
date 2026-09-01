@@ -1,0 +1,1042 @@
+
+===== PAGE 1 =====
+Case  Study:  Electrical  Testing  &  
+Reporting
+ 
+Automation
+ 
+Important:  Performance  and  ROI  figures  below  are  illustrative  projections  based  on  
+reasonable
+ 
+workflow
+ 
+assumptions.
+ 
+They
+ 
+must
+ 
+be
+ 
+validated
+ 
+against
+ 
+actual
+ 
+operational
+ 
+data
+ 
+before
+ 
+publication.
+ 
+Executive  Summary  
+We  developed  a  desktop  application  for  Sarox  Technology  Inc.  that  brings  electrical  test  
+recording,
+ 
+diagnostic
+ 
+calculations,
+ 
+report
+ 
+review,
+ 
+and
+ 
+PDF/Excel
+ 
+export
+ 
+into
+ 
+one
+ 
+controlled
+ 
+workflow.
+ 
+The  application  is  designed  to  reduce  repetitive  report  preparation,  improve  consistency,  and  
+help
+ 
+technicians
+ 
+spend
+ 
+more
+ 
+time
+ 
+testing
+ 
+equipment
+ 
+instead
+ 
+of
+ 
+formatting
+ 
+documents.
+ 
+ Projected  outcome  Estimated  result  
+Reduction  in  manual  reporting  work  65%  
+Time  saved  per  technician  18–28  hours  per  month  
+Faster  report  completion  55%  
+Reduction  in  reporting  errors  40%   
+The  Approach  
+Project  Overview   Project  detail  Information  
+Client  Sarox  Technology  Inc.  
+===== PAGE 2 =====
+Industry  Electrical  testing  and  equipment  diagnostics  
+Project  Winding  and  Insulation  Tester  Desktop  Application  
+Duration  7  weeks 
+Platform  Windows,  macOS,  and  Linux  desktop  application  
+Primary  users  Electrical  testing  technicians  and  report  reviewers  
+Scope  Test  recording,  calculations,  local  storage,  report  overview,  instrument  communication,  and  PDF/Excel  export  
+Sarox  Technology  Inc.  performs  electrical  testing  and  prepares  technical  reports  that  help  
+customers
+ 
+understand
+ 
+the
+ 
+condition
+ 
+of
+ 
+motors
+ 
+and
+ 
+other
+ 
+electrical
+ 
+equipment.
+ 
+The  project  involved  developing  a  desktop  application  that  could  manage  the  complete  testing  
+workflow—from
+ 
+creating
+ 
+an
+ 
+equipment
+ 
+record
+ 
+and
+ 
+collecting
+ 
+readings
+ 
+to
+ 
+reviewing
+ 
+calculated
+ 
+results
+ 
+and
+ 
+generating
+ 
+a
+ 
+professional
+ 
+report.
+ 
+The  application  covers  insulation  testing,  winding  measurements,  diagnostic  calculations,  
+charts,
+ 
+condition
+ 
+ratings,
+ 
+historical
+ 
+record
+ 
+storage,
+ 
+and
+ 
+report
+ 
+export.
+ 
+ 
+The  Challenge  
+Electrical  testing  generates  a  large  amount  of  technical  information.  For  every  job,  technicians  
+may
+ 
+need
+ 
+to:
+ 
+●  Enter  customer  and  equipment  information.  ●  Record  readings  from  insulation  and  LCR  testing  instruments.  ●  Organize  multiple  test  runs.  ●  Calculate  diagnostic  ratios  and  corrected  values.  ●  Compare  measurements  across  electrical  phases.  ●  Identify  abnormal  imbalance.  ●  Build  charts  and  summary  tables.  ●  Assign  condition  ratings.  ●  Format  the  final  customer  report.  
+When  these  activities  are  distributed  across  instrument  displays,  handwritten  notes,  
+spreadsheets,
+ 
+and
+ 
+document
+ 
+templates,
+ 
+the
+ 
+same
+ 
+information
+ 
+may
+ 
+be
+ 
+handled
+ 
+several
+ 
+times.
+ 
+That  creates  four  business  problems.  
+===== PAGE 3 =====
+Repetitive  work  
+Technicians  spend  time  transferring  readings  and  equipment  information  between  different  tools  
+instead
+ 
+of
+ 
+performing
+ 
+higher-value
+ 
+testing
+ 
+and
+ 
+analysis.
+ 
+Reporting  delays  
+The  report  cannot  be  completed  until  measurements,  calculations,  charts,  and  document  
+formatting
+ 
+have
+ 
+all
+ 
+been
+ 
+prepared.
+ 
+Inconsistent  output  
+Calculations,  terminology,  formatting,  and  condition  assessments  may  vary  depending  on  who  
+prepares
+ 
+the
+ 
+report.
+ 
+Limited  capacity  
+As  testing  volume  increases,  report  preparation  increases  at  almost  the  same  rate.  Handling  
+more
+ 
+work
+ 
+may
+ 
+therefore
+ 
+require
+ 
+more
+ 
+technician
+ 
+or
+ 
+administrative
+ 
+time.
+ 
+ 
+Before  Automation  
+A  typical  manual  reporting  workflow  would  involve:  
+Create  a  job  record          ↓  Write  down  equipment  information          ↓  Capture  readings  from  testing  instruments          ↓  Transfer  readings  into  a  spreadsheet          ↓  Check  and  organize  the  data          ↓  Calculate  test  ratios  and  phase  imbalance          ↓  Create  charts  and  summary  tables          ↓  Copy  the  results  into  a  report  template          ↓  Review  and  correct  the  report          ↓  
+===== PAGE 4 =====
+Save  and  deliver  the  final  document  
+Under  the  illustrative  baseline  used  for  this  case  study,  each  report  required  approximately  80  
+minutes
+ 
+of
+ 
+preparation
+ 
+after
+ 
+testing.
+ 
+At  30  reports  per  month,  this  represented  approximately  50  technician  hours  spent  on  report  
+preparation.
+ 
+It
+ 
+also
+ 
+introduced
+ 
+multiple
+ 
+opportunities
+ 
+for
+ 
+transcription
+ 
+errors,
+ 
+inconsistent
+ 
+calculations,
+ 
+and
+ 
+formatting
+ 
+corrections.
+ 
+ 
+The  Objective  
+The  application  needed  to  achieve  six  practical  objectives:  
+1.  Create  one  reliable  record  for  customer,  project,  equipment,  and  test  information.  2.  Reduce  repeated  data  entry  by  reusing  stored  information  throughout  the  workflow.  3.  Apply  calculations  consistently  across  the  application,  PDF  reports,  and  Excel  
+workbooks.
+ 4.  Make  technical  results  easier  to  review  through  summaries,  charts,  condition  ratings,  
+and
+ 
+polar
+ 
+plots.
+ 5.  Generate  professional  reports  quickly  without  rebuilding  them  manually.  6.  Preserve  technician  control  over  testing,  interpretation,  review,  and  final  report  
+approval.
+ 
+The  application  also  needed  to  work  locally  because  electrical  testing  may  take  place  in  
+environments
+ 
+without
+ 
+dependable
+ 
+internet
+ 
+access.
+ 
+ 
+Our  Approach  
+We  organized  the  application  around  the  technician’s  real  working  sequence.  
+First,  we  separated  the  workflow  into  three  categories.  
+Steps  suitable  for  automation  
+●  Reusing  project  and  equipment  information  ●  Storing  readings  ●  Formatting  electrical  values  ●  Calculating  ratios  and  imbalance  ●  Applying  approved  rating  rules  ●  Creating  charts  
+===== PAGE 5 =====
+●  Building  report  tables  ●  Generating  PDF  and  Excel  files  
+Steps  requiring  technician  control  
+●  Connecting  and  configuring  test  instruments  ●  Confirming  equipment  details  ●  Selecting  the  correct  test  ●  Reviewing  unusual  readings  ●  Interpreting  exceptions  ●  Approving  the  final  report  
+Steps  requiring  operational  safeguards  
+●  Detecting  incomplete  or  invalid  information  ●  Handling  overloaded  measurements  ●  Preventing  inconsistent  report  values  ●  Preserving  records  between  sessions  ●  Managing  instrument  connection  failures  ●  Allowing  reports  to  be  reviewed  before  export  
+This  approach  automated  repetitive  processing  without  removing  professional  judgment  from  
+the
+ 
+technician.
+ 
+ 
+The  Solution  
+We  developed  a  desktop  application  that  combines  electrical  test  recording,  data  management,  
+analysis,
+ 
+visualization,
+ 
+and
+ 
+reporting.
+ 
+Technicians  can  create  an  equipment  record,  enter  project  information,  capture  insulation  and  
+winding
+ 
+measurements,
+ 
+review
+ 
+calculated
+ 
+results,
+ 
+and
+ 
+export
+ 
+the
+ 
+completed
+ 
+report
+ 
+as
+ 
+PDF
+ 
+or
+ 
+Excel.
+ 
+The  application  stores  information  locally  and  uses  the  same  record  to  generate  the  report  
+overview
+ 
+and
+ 
+both
+ 
+export
+ 
+formats.
+ 
+This
+ 
+avoids
+ 
+rebuilding
+ 
+the
+ 
+report
+ 
+from
+ 
+separate
+ 
+files.
+ 
+===== PAGE 6 =====
+Technical  Architecture  
+ 
+The  application  does  not  require  a  cloud  platform  or  external  CRM  to  complete  its  core  workflow.  
+ 
+How  the  Automation  Works  
+Step  1:  A  test  record  is  created  
+Trigger:  The  technician  selects  “New  Record.”  
+What  happens:  The  application  creates  a  unique  record  for  the  job.  
+System  involved:  React  desktop  interface  and  local  SQL  database.  
+What  happens  next:  Customer,  project,  equipment,  and  testing  information  can  be  added  to  
+the
+ 
+record.
+ 
+Step  2:  Equipment  information  is  captured  
+Trigger:  The  technician  enters  project  and  equipment  details.  
+What  happens:  Information  such  as  the  client,  equipment  configuration,  testing  location,  
+insulation
+ 
+class,
+ 
+wire
+ 
+markings,
+ 
+and
+ 
+test
+ 
+voltages
+ 
+is
+ 
+saved.
+ 
+
+===== PAGE 7 =====
+System  involved:  Information  form  and  local  database.  
+What  happens  next:  The  information  becomes  available  to  the  test  screens  and  report  
+generator
+ 
+without
+ 
+being
+ 
+entered
+ 
+again.
+ 
+Step  3:  Insulation  readings  are  collected  
+Trigger:  The  technician  starts  an  insulation  test  or  receives  readings  from  the  supported  
+instrument
+ 
+workflow.
+ 
+What  happens:  Time,  applied  voltage,  actual  voltage,  current,  and  resistance  values  are  
+recorded
+ 
+against
+ 
+the
+ 
+selected
+ 
+test
+ 
+run.
+ 
+System  involved:  Insulation-testing  interface,  serial  communication  layer,  and  database.  
+What  happens  next:  The  data  becomes  available  for  calculation,  graphing,  and  reporting.  
+Step  4:  Winding  measurements  are  recorded  
+Trigger:  The  technician  selects  a  multimeter  field  or  sends  a  supported  measurement  
+command.
+ 
+What  happens:  The  application  stores  the  measured  value  together  with  relevant  temperature  
+and
+ 
+frequency
+ 
+information.
+ 
+System  involved:  Multimeter  interface,  serial  communication  layer,  and  database.  
+What  happens  next:  Phase  measurements  can  be  compared  and  used  in  report  summaries.  
+Step  5:  Diagnostic  values  are  calculated  
+Trigger:  Sufficient  test  data  becomes  available.  
+What  happens:  The  application  calculates  relevant  results,  including  Polarization  Index,  
+Dielectric
+ 
+Absorption
+ 
+Ratio,
+ 
+corrected
+ 
+insulation
+ 
+resistance,
+ 
+and
+ 
+phase
+ 
+imbalance.
+ 
+It  also  assigns  consistent  condition  bands:  
+●  Excellent  ●  Good  ●  Normal  ●  Observe  ●  Caution  ●  Alarm  
+System  involved:  Application  calculation  and  rating  logic.  
+===== PAGE 8 =====
+What  happens  next:  Results  appear  in  the  report  overview  with  the  related  tables  and  charts.  
+Step  6:  The  technician  reviews  the  report  
+Trigger:  The  technician  opens  the  Report  screen.  
+What  happens:  The  application  retrieves  the  equipment  information,  insulation  results,  winding  
+measurements,
+ 
+calculations,
+ 
+ratings,
+ 
+and
+ 
+visualizations.
+ 
+System  involved:  Report  overview  and  local  database.  
+What  happens  next:  The  technician  can  check  the  report  before  creating  the  final  file.  
+Step  7:  The  report  is  exported  
+Trigger:  The  technician  selects  “Export  PDF”  or  “Export  Excel.”  
+What  happens:  The  application  formats  the  available  data,  calculations,  charts,  ratings,  and  
+branding
+ 
+into
+ 
+the
+ 
+selected
+ 
+report
+ 
+format.
+ 
+System  involved:  PDFKit  for  PDF  generation  and  ExcelJS  for  Excel  generation.  
+What  happens  next:  A  save  dialog  allows  the  technician  to  choose  the  final  file  location.  
+ 
+Integrations  
+The  current  application  uses  local  software  components  and  direct  instrument  communication  
+rather
+ 
+than
+ 
+external
+ 
+cloud
+ 
+services.
+ 
+ 
+
+===== PAGE 9 =====
+   Integration  Purpose  Communication  method  
+Megger  testing  instrument  
+Collect  insulation-test  readings  Serial  connection  
+LCR  multimeter  Collect  winding-related  measurements  
+Serial  connection  and  device  commands  
+Local  database  Store  records  and  test  measurements  
+Internal  SQL  operations  
+PDFKit  Generate  fixed-format  reports  Internal  application  library  
+ExcelJS  Generate  editable  workbooks  Internal  application  library  
+Operating  system  Select  report  locations  and  open  files  
+Electron  desktop  APIs  
+Instrument  configuration  and  data  parsing  must  match  the  exact  protocol  of  the  physical  devices  
+used
+ 
+in
+ 
+production.
+ 
+ 
+Technical  Challenges  
+Challenge  1:  Maintaining  consistent  results  across  three  outputs  
+The  same  measurement  appears  on  the  report  screen,  in  the  PDF  report,  and  in  the  Excel  
+workbook.
+ 
+If
+ 
+each
+ 
+area
+ 
+calculates
+ 
+results
+ 
+differently,
+ 
+customers
+ 
+could
+ 
+receive
+ 
+conflicting
+ 
+information.
+ 
+Solution:  Calculation,  formatting,  and  rating  rules  were  standardized  across  the  reporting  
+workflow.
+ 
+This
+ 
+includes
+ 
+resistance
+ 
+formatting,
+ 
+phase
+ 
+imbalance,
+ 
+temperature
+ 
+correction,
+ 
+test
+ 
+ratios,
+ 
+and
+ 
+condition
+ 
+bands.
+ 
+Challenge  2:  Presenting  complex  electrical  data  clearly  
+Raw  electrical  readings  are  necessary  for  technical  review,  but  they  are  difficult  for  many  
+customers
+ 
+and
+ 
+business
+ 
+stakeholders
+ 
+to
+ 
+interpret
+ 
+quickly.
+ 
+===== PAGE 10 =====
+Solution:  The  application  presents  the  data  through  summary  tables,  trend  charts,  phase  
+comparisons,
+ 
+polar
+ 
+plots,
+ 
+calculated
+ 
+ratios,
+ 
+and
+ 
+color-coded
+ 
+condition
+ 
+ratings.
+ 
+Readers
+ 
+can
+ 
+see
+ 
+both
+ 
+the
+ 
+underlying
+ 
+readings
+ 
+and
+ 
+the
+ 
+overall
+ 
+assessment.
+ 
+Challenge  3:  Generating  reports  with  variable  amounts  of  data  
+Different  jobs  may  contain  different  test  types,  numbers  of  readings,  charts,  logos,  and  
+equipment
+ 
+details.
+ 
+A
+ 
+rigid
+ 
+report
+ 
+template
+ 
+may
+ 
+produce
+ 
+empty
+ 
+sections
+ 
+or
+ 
+broken
+ 
+layouts.
+ 
+Solution:  Report  sections  are  created  dynamically  from  the  information  available  in  each  
+record.
+ 
+The
+ 
+PDF
+ 
+and
+ 
+Excel
+ 
+exporters
+ 
+include
+ 
+the
+ 
+relevant
+ 
+tests
+ 
+and
+ 
+visualizations
+ 
+without
+ 
+requiring
+ 
+the
+ 
+technician
+ 
+to
+ 
+rebuild
+ 
+the
+ 
+document.
+ 
+Challenge  4:  Supporting  offline  work  
+Testing  locations  may  not  always  have  reliable  internet  access.  A  cloud-dependent  application  
+could
+ 
+interrupt
+ 
+field
+ 
+operations.
+ 
+Solution:  Equipment  records  and  measurements  are  stored  locally.  Core  testing,  review,  and  
+report
+ 
+generation
+ 
+can
+ 
+continue
+ 
+without
+ 
+an
+ 
+internet
+ 
+connection.
+ 
+Challenge  5:  Handling  physical  instrument  communication  
+Serial  devices  can  return  partial  messages,  unexpected  formats,  or  connection  errors.  
+Solution:  Instrument  communication  was  separated  into  a  dedicated  serial  layer.  This  layer  
+manages
+ 
+port
+ 
+discovery,
+ 
+connection
+ 
+status,
+ 
+incoming
+ 
+data,
+ 
+parsing,
+ 
+commands,
+ 
+disconnection,
+ 
+and
+ 
+simulator
+ 
+support.
+ 
+ 
+Before  vs.  After   Area  Before  After  
+Manual  work  Readings,  calculations,  charts,  and  report  content  prepared  separately  
+Data  reused  automatically  throughout  the  application  
+Processing  time  Approximately  100  minutes  per  report  
+Approximately  45  minutes  per  report  
+Errors  About  10  transcription  or  calculation  corrections  per  month  
+About  6  corrections  per  month  
+===== PAGE 11 =====
+Data  entry  Information  entered  into  multiple  files  or  templates  
+Information  entered  once  per  equipment  record  
+Calculations  Prepared  or  checked  separately  Calculated  consistently  by  the  application  
+Charts  Created  manually  or  in  a  separate  spreadsheet  
+Generated  from  stored  measurements  
+Notifications/actions  
+Report  manually  assembled  and  located  
+PDF  or  Excel  generated  directly  from  the  reviewed  record  
+Scalability  About  22  completed  reports  per  technician  each  month  
+About  30  completed  reports  per  technician  each  month  
+Record  storage  Dependent  on  individual  file  organization  
+Structured  local  record  storage  
+Internet  dependency  
+Dependent  on  tools  used  previously  Core  application  operates  offline  
+ 
+Projected  Results  
+Repeated  data  transfer,  calculations,  chart  preparation,  and  document  formatting  are  reduced  
+through
+ 
+one
+ 
+connected
+ 
+workflow.
+ 
+At  approximately  30  reports  per  month,  the  projected  time  saving  is  between  18  and  28  hours,  
+depending
+ 
+on
+ 
+report
+ 
+complexity.
+ 
+Projected  report-preparation  time  decreases  from  approximately  100  minutes  to  45  minutes.  
+Consistent  calculations  and  reduced  transcription  are  projected  to  lower  calculation,  
+copying,
+ 
+and
+ 
+formatting
+ 
+corrections.
+ 
+Projected  capacity  increases  from  approximately  22  to  30  reports  per  technician  each  month  
+without
+ 
+a
+ 
+proportional
+ 
+increase
+ 
+in
+ 
+administrative
+ 
+work.
+ 
+ 
+===== PAGE 12 =====
+ 
+Conclusion  
+More  productive  technician  time  
+Reducing  repetitive  report  preparation  gives  technicians  more  time  for  testing,  diagnosis,  
+customer
+ 
+communication,
+ 
+and
+ 
+exception
+ 
+review.
+ 
+Faster  customer  response  
+Reports  can  be  generated  as  soon  as  the  test  record  has  been  reviewed.  Customers  receive  
+the
+ 
+information
+ 
+needed
+ 
+for
+ 
+maintenance
+ 
+decisions
+ 
+sooner.
+ 
+Lower  administrative  cost  
+Automation  reduces  the  paid  technical  time  spent  copying  readings,  checking  formulas,  
+recreating
+ 
+charts,
+ 
+and
+ 
+formatting
+ 
+reports.
+ 
+More  consistent  operations  
+Approved  calculation  and  rating  rules  are  applied  through  the  same  application  workflow,  
+helping
+ 
+the
+ 
+company
+ 
+maintain
+ 
+a
+ 
+repeatable
+ 
+reporting
+ 
+standard.
+ 
+Increased  capacity  
+Reducing  preparation  time  allows  the  same  team  to  complete  more  reports  without  increasing  
+administrative
+ 
+effort
+ 
+at
+ 
+the
+ 
+same
+ 
+rate.
+ 
+Reduced  dependency  on  individual  spreadsheets  
+The  reporting  process  is  stored  within  the  application  rather  than  depending  on  one  employee’s  
+spreadsheet
+ 
+formulas,
+ 
+templates,
+ 
+or
+ 
+document-formatting
+ 
+knowledge.
+ 
+Better  customer  communication  
+Charts,  summaries,  and  condition  ratings  help  decision-makers  understand  test  results  without  
+removing
+ 
+the
+ 
+technical
+ 
+detail
+ 
+required
+ 
+by
+ 
+engineers.
+ 
+ 
+ 
+===== PAGE 13 =====
+Technology  Stack  
+Component  Technology  Purpose  
+Desktop  application  Electron  Runs  the  application  as  installable  desktop  software  
+User  interface  React  Provides  the  testing  and  reporting  screens  
+Navigation  React  Router  Manages  application  views  
+Local  database  SQL.js  Stores  equipment  records  and  test  measurements  
+Instrument  communication  
+SerialPort  Connects  with  supported  electrical  testing  instruments  
+Charts  Recharts  Displays  test  trends  and  comparisons  
+Custom  visualization  SVG  Produces  impedance  polar  plots  
+PDF  reporting  PDFKit  Generates  customer-ready  PDF  reports  
+Spreadsheet  reporting  ExcelJS  Generates  structured  Excel  workbooks  
+Application  packaging  Electron  Forge  Builds  distributable  application  packages  
+Build  system  Webpack  and  Babel  
+Compiles  the  desktop  application  
+ 
+Key  Takeaways  
+●  Effective  automation  begins  with  the  operating  process,  not  the  report  template.  ●  Electrical  readings,  calculations,  review,  and  export  can  be  managed  within  one  
+controlled
+ 
+application.
+ ●  Reusing  stored  information  reduces  duplicate  entry  and  reporting  effort.  ●  Technician  judgment  remains  part  of  testing,  exception  handling,  and  final  approval.  ●  Local  storage  allows  core  work  to  continue  without  dependable  internet  access.  ●  Automated  PDF  and  Excel  generation  can  improve  speed  without  sacrificing  technical  
+detail.
+ 
+ 
+ 

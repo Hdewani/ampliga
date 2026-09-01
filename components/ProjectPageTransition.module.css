@@ -1,0 +1,6 @@
+.overlay{position:fixed;inset:0;z-index:9999;display:grid;grid-template-rows:repeat(5,minmax(0,1fr));pointer-events:none;visibility:hidden}
+.overlay.active{visibility:visible;pointer-events:all}
+.slice{display:block;margin:-1px 0;background:#111111;transform:scaleY(0);transform-origin:center bottom;will-change:transform}
+.overlay.entering{visibility:visible}
+.overlay.entering .slice{transform:scaleY(1);transform-origin:center top}
+@media(prefers-reduced-motion:reduce){.overlay{display:none}}
