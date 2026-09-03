@@ -5,6 +5,6 @@ import { usePathname } from 'next/navigation';
 
 export default function DesignSwitcher(){
   const pathname=usePathname();
-  if(pathname!=='/') return null;
-  return <Link href="/v2" className="design-switcher">EXPLORE V2 ↗</Link>;
+  if(pathname!=='/v2') return null;
+  return <Link href="/" className="design-switcher">VIEW NEW DESIGN ↗</Link>;
 }

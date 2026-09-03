@@ -20,27 +20,54 @@ export default function V2HeroMotion(){
     const root=document.documentElement;
     const previousRootOverflow=root.style.overflow;
     const previousRootOverscroll=root.style.overscrollBehavior;
+    const previousRootTouchAction=root.style.touchAction;
     const previousBodyOverflow=document.body.style.overflow;
+    const previousBodyPosition=document.body.style.position;
+    const previousBodyTop=document.body.style.top;
+    const previousBodyWidth=document.body.style.width;
+    const previousBodyTouchAction=document.body.style.touchAction;
     let introLocked=true;
+    const stopIntroScroll=(event:Event)=>event.preventDefault();
     const lockIntroScroll=()=>{
       root.style.overflow='hidden';
       root.style.overscrollBehavior='none';
+      root.style.touchAction='none';
       document.body.style.overflow='hidden';
+      document.body.style.position='fixed';
+      document.body.style.top='0';
+      document.body.style.width='100%';
+      document.body.style.touchAction='none';
+      window.addEventListener('wheel',stopIntroScroll,{passive:false,capture:true});
+      window.addEventListener('touchmove',stopIntroScroll,{passive:false,capture:true});
     };
     const unlockIntroScroll=()=>{
       if(!introLocked)return;
       introLocked=false;
+      window.removeEventListener('wheel',stopIntroScroll,true);
+      window.removeEventListener('touchmove',stopIntroScroll,true);
       root.style.overflow=previousRootOverflow;
       root.style.overscrollBehavior=previousRootOverscroll;
+      root.style.touchAction=previousRootTouchAction;
       document.body.style.overflow=previousBodyOverflow;
+      document.body.style.position=previousBodyPosition;
+      document.body.style.top=previousBodyTop;
+      document.body.style.width=previousBodyWidth;
+      document.body.style.touchAction=previousBodyTouchAction;
       window.scrollTo(0,0);
       ScrollTrigger.refresh();
     };
     lockIntroScroll();
     cleanups.push(()=>{
+      window.removeEventListener('wheel',stopIntroScroll,true);
+      window.removeEventListener('touchmove',stopIntroScroll,true);
       root.style.overflow=previousRootOverflow;
       root.style.overscrollBehavior=previousRootOverscroll;
+      root.style.touchAction=previousRootTouchAction;
       document.body.style.overflow=previousBodyOverflow;
+      document.body.style.position=previousBodyPosition;
+      document.body.style.top=previousBodyTop;
+      document.body.style.width=previousBodyWidth;
+      document.body.style.touchAction=previousBodyTouchAction;
     });
     const ctx=gsap.context(()=>{
       gsap.set('.swiss-logo',{y:-14,autoAlpha:0});
@@ -140,8 +167,8 @@ export default function V2HeroMotion(){
         build.addEventListener('pointermove',move);build.addEventListener('pointerenter',enter);build.addEventListener('pointerleave',leave);cleanups.push(()=>{build.removeEventListener('pointermove',move);build.removeEventListener('pointerenter',enter);build.removeEventListener('pointerleave',leave);idle.kill()})
       }
 
-      const compass=document.querySelector<HTMLElement>('.signal-compass');
-      if(compass){
+      const compasses=Array.from(document.querySelectorAll<HTMLElement>('.signal-compass'));
+      compasses.forEach(compass=>{
         const icon=compass.querySelector('svg');
         const idle=gsap.timeline({repeat:-1,repeatDelay:3.2,delay:2})
           .to(compass,{scale:1.06,boxShadow:'0 0 0 7px rgba(8,8,8,.05)',duration:.24,ease:'power2.out'})
@@ -152,10 +179,10 @@ export default function V2HeroMotion(){
         const enter=()=>{idle.pause();gsap.to(compass,{scale:1.12,boxShadow:'0 0 0 7px rgba(8,8,8,.07)',duration:.34,ease:'back.out(1.8)'});gsap.to(icon,{rotation:360,scale:1.08,duration:.82,ease:'power3.inOut'});gsap.to(curve,{scaleX:1.01,transformOrigin:'left center',duration:.4})};
         const leave=()=>{gsap.to(compass,{x:0,y:0,scale:1,boxShadow:'0 0 0 0 rgba(8,8,8,0)',duration:.7,ease:'elastic.out(1,.46)'});gsap.to(icon,{x:0,y:0,rotation:0,scale:1,duration:.68,ease:'elastic.out(1,.48)'});gsap.to(curve,{scaleX:1,duration:.4});idle.restart(true)};
         compass.addEventListener('pointermove',move);compass.addEventListener('pointerenter',enter);compass.addEventListener('pointerleave',leave);cleanups.push(()=>{compass.removeEventListener('pointermove',move);compass.removeEventListener('pointerenter',enter);compass.removeEventListener('pointerleave',leave);idle.kill()});
-      }
+      });
 
-      const yellow=document.querySelector<HTMLElement>('.momentum-pulse');
-      if(yellow){const bars=yellow.querySelectorAll('path');const move=(event:PointerEvent)=>{const rect=yellow.getBoundingClientRect();const dx=event.clientX-(rect.left+rect.width/2);const dy=event.clientY-(rect.top+rect.height/2);gsap.to(yellow,{x:Math.max(-28,Math.min(28,dx*.42)),y:Math.max(-28,Math.min(28,dy*.42)),rotation:dx*.08,duration:.21,ease:'power2.out',overwrite:'auto'});gsap.to(bars,{x:Math.max(-34,Math.min(34,dx*.5)),y:Math.max(-34,Math.min(34,dy*.5)),duration:.21,ease:'power2.out',overwrite:'auto'})};const enter=()=>{gsap.to(yellow,{scale:1.13,duration:.35,ease:'back.out(1.8)'});gsap.fromTo(bars,{scaleY:.45,y:4},{scaleY:1.18,y:-3,transformOrigin:'50% 100%',duration:.34,stagger:.06,ease:'back.out(2)'});gsap.to(arrowZone,{scaleY:1.035,transformOrigin:'center bottom',duration:.45,ease:'power3.out'})};const leave=()=>{gsap.to(yellow,{x:0,y:0,rotation:0,scale:1,duration:.7,ease:'elastic.out(1,.45)'});gsap.to(bars,{x:0,y:0,scaleY:1,duration:.45,stagger:.04,ease:'elastic.out(1,.5)'});gsap.to(arrowZone,{scaleY:1,duration:.5,ease:'power3.out'})};yellow.addEventListener('pointermove',move);yellow.addEventListener('pointerenter',enter);yellow.addEventListener('pointerleave',leave);cleanups.push(()=>{yellow.removeEventListener('pointermove',move);yellow.removeEventListener('pointerenter',enter);yellow.removeEventListener('pointerleave',leave)})}
+      const yellowPulses=Array.from(document.querySelectorAll<HTMLElement>('.momentum-pulse'));
+      yellowPulses.forEach(yellow=>{const bars=yellow.querySelectorAll('path');const move=(event:PointerEvent)=>{const rect=yellow.getBoundingClientRect();const dx=event.clientX-(rect.left+rect.width/2);const dy=event.clientY-(rect.top+rect.height/2);gsap.to(yellow,{x:Math.max(-28,Math.min(28,dx*.42)),y:Math.max(-28,Math.min(28,dy*.42)),rotation:dx*.08,duration:.21,ease:'power2.out',overwrite:'auto'});gsap.to(bars,{x:Math.max(-34,Math.min(34,dx*.5)),y:Math.max(-34,Math.min(34,dy*.5)),duration:.21,ease:'power2.out',overwrite:'auto'})};const enter=()=>{gsap.to(yellow,{scale:1.13,duration:.35,ease:'back.out(1.8)'});gsap.fromTo(bars,{scaleY:.45,y:4},{scaleY:1.18,y:-3,transformOrigin:'50% 100%',duration:.34,stagger:.06,ease:'back.out(2)'});gsap.to(arrowZone,{scaleY:1.035,transformOrigin:'center bottom',duration:.45,ease:'power3.out'})};const leave=()=>{gsap.to(yellow,{x:0,y:0,rotation:0,scale:1,duration:.7,ease:'elastic.out(1,.45)'});gsap.to(bars,{x:0,y:0,scaleY:1,duration:.45,stagger:.04,ease:'elastic.out(1,.5)'});gsap.to(arrowZone,{scaleY:1,duration:.5,ease:'power3.out'})};yellow.addEventListener('pointermove',move);yellow.addEventListener('pointerenter',enter);yellow.addEventListener('pointerleave',leave);cleanups.push(()=>{yellow.removeEventListener('pointermove',move);yellow.removeEventListener('pointerenter',enter);yellow.removeEventListener('pointerleave',leave)})});
 
       gsap.timeline({scrollTrigger:{trigger:hero,start:'top top',end:'72% top',scrub:1.15,invalidateOnRefresh:true}})
         .to('.hero-primary',{y:-26,scale:.992,duration:1,ease:'none'},0)
@@ -187,8 +214,16 @@ export default function V2HeroMotion(){
         });
         manifestoTimeline
           .to(manifesto,{y:0,duration:.42,ease:'none'},0)
-          .to(manifestoIndex,{autoAlpha:1,y:0,duration:.14,ease:'none'},.18)
-          .to(manifestoWords,{color:(index,word)=>index===0?'#DD1112':word.classList.contains('studio-manifesto-meaningful')?'#890000':word.classList.contains('studio-manifesto-through')?'#797979':'#080808',duration:.13,stagger:.052,ease:'none'},.22);
+          .to(manifestoIndex,{autoAlpha:1,y:0,duration:.14,ease:'none'},.18);
+        gsap.timeline({
+          scrollTrigger:{
+            trigger:manifesto,
+            start:'top 8%',
+            end:'top -62%',
+            scrub:.75,
+            invalidateOnRefresh:true
+          }
+        }).to(manifestoWords,{color:(index,word)=>index===0?'#ca0001':word.classList.contains('studio-manifesto-meaningful')?'#ca0001':'#080808',duration:.13,stagger:.052,ease:'none'});
         const ruleTimeline=gsap.timeline({
           scrollTrigger:{
             trigger:manifesto,
@@ -213,7 +248,7 @@ export default function V2HeroMotion(){
         gsap.set(darkSlices,{scaleY:0});
         gsap.set(factsTitle,{yPercent:100,autoAlpha:1});
         gsap.set(factsWords,{y:36,autoAlpha:0,filter:'blur(8px)'});
-        gsap.timeline({scrollTrigger:{trigger:transitionStage,start:'top top',end:'bottom bottom',scrub:.75,invalidateOnRefresh:true}})
+        gsap.timeline({scrollTrigger:{trigger:transitionStage,start:'top -62%',end:'bottom bottom',scrub:.75,invalidateOnRefresh:true}})
           .to(darkSlices,{scaleY:1,duration:.68,stagger:{each:.05,from:'end'},ease:'power2.inOut'},.14)
           .to(transitionStage,{backgroundColor:'#111111',duration:.14,ease:'none'},.48)
           .to(manifesto,{backgroundColor:'#111111',borderTopLeftRadius:0,borderTopRightRadius:0,duration:.14,ease:'none'},.68)
@@ -226,48 +261,14 @@ export default function V2HeroMotion(){
       if(grid){const interactionSurface=arrowZone||grid;const dots=Array.from(grid.querySelectorAll<SVGCircleElement>('.grid-dot'));const move=(event:PointerEvent)=>{const svg=grid.querySelector<SVGSVGElement>('svg');if(!svg)return;const rect=svg.getBoundingClientRect();const viewBox=svg.viewBox.baseVal;const px=(event.clientX-rect.left)*viewBox.width/rect.width;const py=(event.clientY-rect.top)*viewBox.height/rect.height;const radius=165;dots.forEach(dot=>{const x=Number(dot.getAttribute('cx'));const y=Number(dot.getAttribute('cy'));const dx=x-px;const dy=y-py;const distance=Math.hypot(dx,dy)||1;const force=Math.max(0,1-distance/radius)*28;gsap.to(dot,{x:dx/distance*force,y:dy/distance*force,scale:1+Math.max(0,1-distance/radius)*.7,duration:.18,ease:'power2.out',overwrite:true})});gsap.to(curve,{y:Math.max(-14,Math.min(14,(py-viewBox.height/2)*.085)),duration:.25,overwrite:true})};const leave=()=>{gsap.to(dots,{x:0,y:0,scale:1,duration:.75,stagger:{amount:.18,from:'random'},ease:'elastic.out(1,.42)'});gsap.to(curve,{y:0,duration:.45})};interactionSurface.addEventListener('pointermove',move);interactionSurface.addEventListener('pointerleave',leave);cleanups.push(()=>{interactionSurface.removeEventListener('pointermove',move);interactionSurface.removeEventListener('pointerleave',leave)})}
 
       const orangeDot=document.querySelector<HTMLElement>('.doodle-orange');
-      if(orangeDot){const enter=()=>gsap.to(orangeDot,{y:-10,scale:1.5,boxShadow:'0 0 0 11px rgba(221,17,18,.14)',duration:.32,ease:'back.out(2)'});const leave=()=>gsap.to(orangeDot,{y:0,scale:1,boxShadow:'0 0 0 0 rgba(221,17,18,0)',duration:.6,ease:'elastic.out(1,.48)'});orangeDot.addEventListener('pointerenter',enter);orangeDot.addEventListener('pointerleave',leave);cleanups.push(()=>{orangeDot.removeEventListener('pointerenter',enter);orangeDot.removeEventListener('pointerleave',leave)})}
+      if(orangeDot){const enter=()=>gsap.to(orangeDot,{y:-10,scale:1.5,boxShadow:'0 0 0 11px rgba(202,0,1,.14)',duration:.32,ease:'back.out(2)'});const leave=()=>gsap.to(orangeDot,{y:0,scale:1,boxShadow:'0 0 0 0 rgba(202,0,1,0)',duration:.6,ease:'elastic.out(1,.48)'});orangeDot.addEventListener('pointerenter',enter);orangeDot.addEventListener('pointerleave',leave);cleanups.push(()=>{orangeDot.removeEventListener('pointerenter',enter);orangeDot.removeEventListener('pointerleave',leave)})}
       const blackDot=document.querySelector<HTMLElement>('.doodle-black');
       if(blackDot){const enter=()=>gsap.to(blackDot,{x:14,scale:1.65,duration:.26,ease:'back.out(2.5)'});const leave=()=>gsap.to(blackDot,{x:0,scale:1,duration:.55,ease:'elastic.out(1,.42)'});blackDot.addEventListener('pointerenter',enter);blackDot.addEventListener('pointerleave',leave);cleanups.push(()=>{blackDot.removeEventListener('pointerenter',enter);blackDot.removeEventListener('pointerleave',leave)})}
       const plus=document.querySelector<HTMLElement>('.doodle-plus');
       if(plus){const spin=gsap.timeline({paused:true}).to(plus,{rotation:720,scale:1.3,duration:1.05,ease:'power2.inOut'}).to(plus,{scale:1,duration:.24,ease:'back.out(2)'});const enter=()=>spin.restart();const leave=()=>{spin.pause();gsap.set(plus,{rotation:0});gsap.to(plus,{scale:1,duration:.2})};plus.addEventListener('pointerenter',enter);plus.addEventListener('pointerleave',leave);cleanups.push(()=>{plus.removeEventListener('pointerenter',enter);plus.removeEventListener('pointerleave',leave);spin.kill()})}
       const ring=document.querySelector<HTMLElement>('.doodle-ring');
-      if(ring){const enter=()=>gsap.to(ring,{scale:1.75,rotation:180,borderColor:'#ffc91c',duration:.48,ease:'back.out(1.8)'});const leave=()=>gsap.to(ring,{scale:1,rotation:0,borderColor:'#DD1112',duration:.62,ease:'elastic.out(1,.45)'});ring.addEventListener('pointerenter',enter);ring.addEventListener('pointerleave',leave);cleanups.push(()=>{ring.removeEventListener('pointerenter',enter);ring.removeEventListener('pointerleave',leave)})}
+      if(ring){const enter=()=>gsap.to(ring,{scale:1.75,rotation:180,borderColor:'#ffc91c',duration:.48,ease:'back.out(1.8)'});const leave=()=>gsap.to(ring,{scale:1,rotation:0,borderColor:'#ca0001',duration:.62,ease:'elastic.out(1,.45)'});ring.addEventListener('pointerenter',enter);ring.addEventListener('pointerleave',leave);cleanups.push(()=>{ring.removeEventListener('pointerenter',enter);ring.removeEventListener('pointerleave',leave)})}
 
-      const servicesSection=document.querySelector<HTMLElement>('.swiss-services');
-      const pipeline=document.querySelector<SVGPathElement>('.roadmap-path path');
-      if(servicesSection&&pipeline){
-        const pathLength=pipeline.getTotalLength();
-        const nodes=Array.from(servicesSection.querySelectorAll<HTMLElement>('.roadmap-node'));
-        const stages=Array.from(servicesSection.querySelectorAll<HTMLElement>('.roadmap-stages article'));
-        const rows=Array.from(servicesSection.querySelectorAll<HTMLElement>('.roadmap-row'));
-        const rings=Array.from(servicesSection.querySelectorAll<HTMLElement>('.roadmap-node > span'));
-        const titleLines=Array.from(servicesSection.querySelectorAll<HTMLElement>('.roadmap-title-line'));
-        gsap.set(pipeline,{strokeDasharray:pathLength,strokeDashoffset:pathLength});
-        gsap.set('.roadmap-head > span',{autoAlpha:0,letterSpacing:'.55em',y:16});
-        gsap.set(titleLines,{autoAlpha:0,y:28,filter:'blur(5px)'});
-        gsap.set(stages,{autoAlpha:.22,x:-24});
-        gsap.set(nodes,{autoAlpha:.16,y:20,scale:.9});
-        gsap.set(rings,{'--ring-progress':'0%'});
-        gsap.set('.roadmap-impact-node',{autoAlpha:0,x:-18});
-        const serviceTimeline=gsap.timeline({scrollTrigger:{trigger:servicesSection,start:'top 70%',end:'bottom bottom',scrub:.5,invalidateOnRefresh:true}});
-        serviceTimeline
-          .to(servicesSection,{y:0,duration:.01},0)
-          .to('.roadmap-head > span',{autoAlpha:1,letterSpacing:'.28em',y:0,duration:.11,ease:'power2.out'},0)
-          .to(titleLines,{autoAlpha:1,y:0,filter:'blur(0px)',duration:.16,stagger:.045,ease:'power3.out'},.035)
-          .to(pipeline,{strokeDashoffset:0,duration:.76,ease:'none'},.15);
-        const nodeTimes=[.25,.34,.45,.55,.65,.76,.84];
-        const orderedNodes=[nodes[0],nodes[1],nodes[4],nodes[3],nodes[2],nodes[5],nodes[6]].filter(Boolean);
-        orderedNodes.forEach((node,index)=>{
-          const ring=node.querySelector<HTMLElement>(':scope > span');
-          if(ring) serviceTimeline.to(ring,{'--ring-progress':'100%',duration:.085,ease:'none'},nodeTimes[index]-.025);
-          serviceTimeline.to(node,{autoAlpha:1,y:0,scale:1,duration:.075,ease:'back.out(1.5)'},nodeTimes[index]);
-          const row=node.closest('.roadmap-row');
-          const stageIndex=row?rows.indexOf(row as HTMLElement):index;
-          if(stages[stageIndex]) serviceTimeline.to(stages[stageIndex],{autoAlpha:1,x:0,duration:.1,ease:'power2.out'},nodeTimes[index]-.035);
-        });
-        serviceTimeline.to('.roadmap-impact-node',{autoAlpha:1,x:0,duration:.12,ease:'power3.out'},.88);
-      }
 
       const impactSection=document.querySelector<HTMLElement>('.impact-studio');
       if(impactSection){
@@ -409,6 +410,12 @@ export default function V2HeroMotion(){
       const projectCards=projectTrack?Array.from(projectTrack.querySelectorAll<HTMLElement>('.project-card')):[];
       const workCollectionPanel=projectTrack?.querySelector<HTMLElement>('.work-collection-panel');
       const workCapabilitiesPanel=workSection?.querySelector<HTMLElement>('.work-capabilities-panel');
+      const workCapabilitiesGroup=workCapabilitiesPanel?.querySelector<HTMLElement>(':scope > div');
+      const workCapabilitiesChrome=workCapabilitiesPanel?Array.from(workCapabilitiesPanel.querySelectorAll<HTMLElement>(':scope > span,:scope > small')):[];
+      const workCapabilityWords=workCapabilitiesPanel?Array.from(workCapabilitiesPanel.querySelectorAll<HTMLElement>('p b')):[];
+      const workCapabilitiesText=workCapabilitiesPanel?Array.from(workCapabilitiesPanel.querySelectorAll<HTMLElement>('span,p b,small')):[];
+      const workCapabilityLetters=workCapabilitiesPanel?Array.from(workCapabilitiesPanel.querySelectorAll<HTMLElement>('.capability-letter')):[];
+      const workZoomFlood=workCapabilitiesPanel?.querySelector<HTMLElement>('.work-zoom-flood');
       if(workSection&&workSticky){
         gsap.set(workSticky,{'--work-line-progress':0,'--work-plus-rotation':'0deg'});
         gsap.to(workSticky,{'--work-line-progress':1,'--work-plus-rotation':'540deg',ease:'none',scrollTrigger:{trigger:workSection,start:'top 80%',end:'top 42%',scrub:1.25,invalidateOnRefresh:true}});
@@ -426,6 +433,10 @@ export default function V2HeroMotion(){
         gsap.set(projectCards.slice(1),{y:()=>window.innerHeight*.68,force3D:true});
         if(workCollectionPanel)gsap.set(workCollectionPanel,{y:0,autoAlpha:1,force3D:true});
         if(workCapabilitiesPanel)gsap.set(workCapabilitiesPanel,{y:0,autoAlpha:1,force3D:true});
+        if(workZoomFlood)gsap.set(workZoomFlood,{autoAlpha:0});
+        if(workCapabilitiesChrome.length)gsap.set(workCapabilitiesChrome,{autoAlpha:0});
+        if(workCapabilityWords.length)gsap.set(workCapabilityWords,{x:0,y:0,autoAlpha:1,filter:'blur(0px)',force3D:true});
+        if(workCapabilityLetters.length)gsap.set(workCapabilityLetters,{x:(index)=>34+(index%4)*9,y:(index)=>18+(index%3)*7,rotation:(index)=>index%2===0?-4:4,scale:.96,autoAlpha:0,filter:'blur(14px)',force3D:true});
         const workTimeline=gsap.timeline({scrollTrigger:{trigger:workSection,start:'top top',end:'bottom bottom',scrub:1.8,invalidateOnRefresh:true}});
         workTimeline.to([projectTrack,workIntro],{
           x:()=>-Math.max(0,projectTrack.scrollWidth-projectViewport.clientWidth),
@@ -439,15 +450,132 @@ export default function V2HeroMotion(){
         if(workDarkLayer){
           workTimeline.to(workDarkLayer,{
             x:()=>-window.innerWidth,
-            duration:.2,
+            duration:.45,
             ease:'none',
             force3D:true
-          },.62);
+          },.82);
+        }
+        if(workCapabilityLetters.length){
+          workTimeline.to(workCapabilityLetters,{
+            x:0,
+            y:0,
+            rotation:0,
+            scale:1,
+            autoAlpha:1,
+            filter:'blur(0px)',
+            duration:.16,
+            stagger:{each:.006,from:'start'},
+            ease:'power2.out',
+            force3D:true
+          },1.02);
+        }
+        if(workCapabilitiesChrome.length){
+          workTimeline.to(workCapabilitiesChrome,{
+            autoAlpha:1,
+            duration:.14,
+            ease:'power2.out'
+          },1.16);
+        }
+        // Fade-to-black: as you scroll past the capabilities panel, the whole
+        // section fades to black and the lettering goes white. No zoom — after the
+        // black it simply scrolls on to the next section.
+        if(workCapabilitiesPanel){
+          workTimeline.to(workCapabilitiesPanel,{
+            backgroundColor:'#111111',
+            color:'#F9F9F9',
+            duration:.28,
+            ease:'none'
+          },1.34);
+          if(workCapabilitiesText.length){
+            workTimeline.to(workCapabilitiesText,{
+              color:'#F9F9F9',
+              duration:.28,
+              ease:'none'
+            },1.34);
+          }
+        }
+        if(workCapabilitiesGroup&&workZoomFlood){
+          workTimeline
+            .to(workCapabilitiesChrome,{
+              autoAlpha:0,
+              filter:'blur(7px)',
+              duration:.2,
+              ease:'power2.in'
+            },1.7)
+            .set(workCapabilitiesGroup,{position:'relative',zIndex:11,transformOrigin:'50% 50%'},1.7)
+            .to(workCapabilitiesGroup,{
+              scale:180,
+              duration:1.16,
+              ease:'power2.inOut',
+              force3D:true
+            },1.76)
+            .to(workZoomFlood,{
+              autoAlpha:1,
+              duration:.3,
+              ease:'power1.inOut'
+            },2.78)
+            .to(workZoomFlood,{autoAlpha:1,duration:.38,ease:'none'},3.08);
         }
       }
 
+      // Services is now a plain, static section — no pinned heading reveal or
+      // stacked row deal. It simply lists the services normally after the
+      // Selected Work capability-letter scatter.
+
+      const testimonialSection=document.querySelector<HTMLElement>('.partner-testimonials');
+      const testimonialCanvas=testimonialSection?.querySelector<HTMLElement>('.partner-testimonials-canvas');
+      const testimonialCards=Array.from(document.querySelectorAll<HTMLElement>('.partner-testimonial-card'));
+      const testimonialCenter=Array.from(document.querySelectorAll<HTMLElement>('.partner-testimonials-center > *'));
+      if(testimonialSection&&testimonialCards.length){
+        // Entrance (once): the dotted canvas fades up and the heading settles in.
+        const testimonialTimeline=gsap.timeline({scrollTrigger:{trigger:testimonialSection,start:'top 72%',once:true,invalidateOnRefresh:true}});
+        if(testimonialCanvas)testimonialTimeline.from(testimonialCanvas,{autoAlpha:0,duration:1.15,ease:'power1.out'},0);
+        testimonialTimeline.from(testimonialCenter,{y:34,autoAlpha:0,filter:'blur(8px)',duration:.8,stagger:.12,ease:'power3.out'},.18);
+        const testimonialGrid=testimonialSection.querySelector<HTMLElement>('.partner-testimonials-grid');
+        if(testimonialGrid&&window.matchMedia('(min-width: 761px)').matches){
+          // "Dealing the deck": all cards start stacked at the centre of the grid
+          // and, scrubbed by scroll, deal out one-by-one to their scattered final
+          // positions. The offset back to centre is measured from layout
+          // (offsetLeft/Top), so it stays correct through resizes and is immune to
+          // whatever transform GSAP currently has applied.
+          const cardRotation=[-1.5,1.6,1.4,-1.8];
+          const toCentreX=(card:HTMLElement)=>testimonialGrid.clientWidth/2-(card.offsetLeft+card.offsetWidth/2);
+          const toCentreY=(card:HTMLElement)=>testimonialGrid.clientHeight/2-(card.offsetTop+card.offsetHeight/2);
+          testimonialCards.forEach(card=>gsap.set(card,{transformOrigin:'50% 50%'}));
+          // Anchor the deal to the section's centre reaching the viewport centre,
+          // so the cards deal out *as you scroll into* the section and finish when
+          // it is centred — not while the tall section's top edge is still entering.
+          const dealTimeline=gsap.timeline({scrollTrigger:{trigger:testimonialSection,start:'top 80%',end:'center 52%',scrub:1,invalidateOnRefresh:true}});
+          testimonialCards.forEach((card,index)=>{
+            const stackTilt=(index-(testimonialCards.length-1)/2)*4; // slight fan while stacked as a deck
+            dealTimeline.fromTo(card,
+              {x:()=>toCentreX(card),y:()=>toCentreY(card),rotation:stackTilt,scale:.9,autoAlpha:0,filter:'blur(6px)'},
+              {x:0,y:0,rotation:cardRotation[index%cardRotation.length],scale:1,autoAlpha:1,filter:'blur(0px)',duration:1,ease:'power3.out'},
+              index*0.5); // sequential deal
+          });
+        }
+      }
+
+      // Phones don't get the desktop pinned/horizontal scroll choreography (it
+      // needs the width). Give the sections that are otherwise static on mobile
+      // a lightweight on-scroll reveal so the page still animates as you scroll.
+      if(window.matchMedia('(max-width: 760px)').matches){
+        const revealOnScroll=(elements:Array<HTMLElement|null>,{y=44,duration=.7,stagger=0,start='top 88%'}:{y?:number;duration?:number;stagger?:number;start?:string}={})=>{
+          elements.filter((el):el is HTMLElement=>!!el).forEach((el,index)=>{
+            gsap.set(el,{y,autoAlpha:0,force3D:true});
+            gsap.to(el,{y:0,autoAlpha:1,duration,delay:index*stagger,ease:'power3.out',force3D:true,scrollTrigger:{trigger:el,start,once:true,invalidateOnRefresh:true}});
+          });
+        };
+        // Services stays static (no reveal) on mobile too.
+        // Selected work: each project card, then the capability words.
+        revealOnScroll(Array.from(document.querySelectorAll<HTMLElement>('.swiss-work .project-card')),{y:56});
+        // Capability words (A.I. / Design / Development / Branding) stay visible on
+        // mobile — the scroll-reveal was leaving them stuck hidden on phones.
+        revealOnScroll([document.querySelector<HTMLElement>('.work-collection-panel h3'),document.querySelector<HTMLElement>('.work-collection-panel a')],{y:32,start:'top 90%'});
+        revealOnScroll(testimonialCards,{y:46,stagger:.06,start:'top 91%'});
+      }
+
       const revealGroups=[
-        {trigger:'.swiss-insights',items:'.swiss-insights > *',stagger:.1},
         {trigger:'.swiss-contact',items:'.swiss-contact > *',stagger:.11},
         {trigger:'.swiss-footer',items:'.swiss-footer > *',stagger:.08}
       ];
