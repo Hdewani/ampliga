@@ -598,8 +598,31 @@ export default function V2HeroMotion(){
         // Services stays static (no reveal) on mobile too.
         // Selected work: each project card, then the capability words.
         revealOnScroll(Array.from(document.querySelectorAll<HTMLElement>('.swiss-work .project-card')),{y:56});
-        // Capability words (Strategy / Design / Systems / Automation) stay visible on
-        // mobile — the scroll-reveal was leaving them stuck hidden on phones.
+        // Capability words (Strategy / Design / Systems / Automation). Desktop
+        // scatters these as part of the pinned choreography, which phones don't
+        // get. An IntersectionObserver drives the mobile reveal rather than a
+        // ScrollTrigger: the panel is 100svh here, so a `top 88%` start can be
+        // passed before the panel is actually on screen and leave the words
+        // stuck hidden -- which is what the earlier attempt did. An observer
+        // fires on observe() with the current state, so it self-corrects.
+        const capabilityPanel=document.querySelector<HTMLElement>('.work-capabilities-panel');
+        const capabilityLetters=capabilityPanel?Array.from(capabilityPanel.querySelectorAll<HTMLElement>('.capability-letter')):[];
+        if(capabilityPanel&&capabilityLetters.length){
+          gsap.set(capabilityLetters,{yPercent:65,autoAlpha:0,filter:'blur(11px)',force3D:true});
+          // Watch the words themselves, not the panel: the panel is a full
+          // viewport tall, so any panel-level threshold fires while the words
+          // are still well below the fold and the reveal finishes before you
+          // get to them. The negative bottom margin holds it until the words
+          // cross 72% of the viewport height.
+          const capabilityGroup=capabilityPanel.querySelector<HTMLElement>(':scope > div')||capabilityPanel;
+          const capabilityObserver=new IntersectionObserver(entries=>{
+            if(!entries.some(entry=>entry.isIntersecting))return;
+            gsap.to(capabilityLetters,{yPercent:0,autoAlpha:1,filter:'blur(0px)',duration:.74,stagger:{each:.022},ease:'power3.out',overwrite:true});
+            capabilityObserver.disconnect();
+          },{threshold:0,rootMargin:'0px 0px -28% 0px'});
+          capabilityObserver.observe(capabilityGroup);
+          cleanups.push(()=>capabilityObserver.disconnect());
+        }
         revealOnScroll([document.querySelector<HTMLElement>('.work-collection-panel h3'),document.querySelector<HTMLElement>('.work-collection-panel a')],{y:32,start:'top 90%'});
         revealOnScroll(testimonialCards,{y:46,stagger:.06,start:'top 91%'});
       }
@@ -624,6 +647,31 @@ export default function V2HeroMotion(){
         observers.push(observer);
       });
       cleanups.push(()=>observers.forEach(observer=>observer.disconnect()));
+
+      // A nav anchor teleports the scroll position. Every scrubbed timeline
+      // between here and the target is then mid-flight: scrub eases each one
+      // from its old progress to the new one over its scrub duration, so you
+      // land on the section while the rest of the page is still animating
+      // itself into place. Nothing is scrolling any more, so that motion reads
+      // as a glitch rather than as scroll-driven. Finish the scrub tweens on
+      // arrival so the destination is composed the moment you get there.
+      const settleScrubbedTimelines=()=>{
+        ScrollTrigger.update();
+        ScrollTrigger.getAll().forEach(trigger=>{
+          const scrubTween=typeof trigger.getTween==='function'?trigger.getTween():null;
+          if(scrubTween)scrubTween.progress(1);
+        });
+      };
+      const settleAfterAnchorJump=(event:MouseEvent)=>{
+        const link=(event.target as HTMLElement)?.closest?.('a[href^="#"]');
+        if(!link)return;
+        // Two frames: one for the browser to apply the jump, one for
+        // ScrollTrigger to see the new position.
+        requestAnimationFrame(()=>requestAnimationFrame(settleScrubbedTimelines));
+      };
+      document.addEventListener('click',settleAfterAnchorJump);
+      cleanups.push(()=>document.removeEventListener('click',settleAfterAnchorJump));
+
       requestAnimationFrame(()=>ScrollTrigger.refresh());
     },document.body);
     return()=>{cleanups.forEach(cleanup=>cleanup());ctx.revert();hero.classList.remove('hero-motion-ready');window.history.scrollRestoration=previousScrollRestoration};

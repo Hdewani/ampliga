@@ -6,11 +6,16 @@ type Service={number:string;title:string;tags:string[];description:string;image:
 
 // The illustrations are transparent video. Safari -- and every browser on iOS,
 // since they are all WebKit -- plays VP9 WebM but ignores its alpha channel,
-// which leaves the artwork sitting on an opaque block. WebKit gets an
-// HEVC-with-alpha MP4 instead; everyone else keeps the smaller WebM.
+// which leaves the artwork sitting on an opaque block. WebKit gets Apple's
+// HEVC-with-alpha instead; everyone else keeps the smaller WebM.
+//
+// Those files must be .mov: HEVC-with-alpha is only signalled by the `almo`
+// sample-entry box, which AVAssetWriter writes into QuickTime and nothing
+// writes into MP4. An .mp4 without it decodes as an opaque track, which is the
+// exact bug this replaced. See scripts/build-alpha-mov.sh.
 function useAlphaVideoExt(){
- const [ext,setExt]=useState<'webm'|'mp4'|null>(null);
- useEffect(()=>{setExt(/apple/i.test(navigator.vendor)?'mp4':'webm');},[]);
+ const [ext,setExt]=useState<'webm'|'mov'|null>(null);
+ useEffect(()=>{setExt(/apple/i.test(navigator.vendor)?'mov':'webm');},[]);
  return ext;
 }
 
