@@ -2,7 +2,7 @@
 
 import {useState} from 'react';
 
-type Service={number:string;title:string;tags:string[];description:string;image:string};
+type Service={number:string;title:string;tags:string[];description:string;image:string;video?:string};
 
 export default function ServiceAccordion({services}:{services:Service[]}){
  const [openIndex,setOpenIndex]=useState<number|null>(0);
@@ -26,6 +26,7 @@ export default function ServiceAccordion({services}:{services:Service[]}){
        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
       </a>
      </div>
+     {service.video&&<div className="service-item-visual"><video src={service.video} autoPlay muted loop playsInline preload="metadata" aria-label={`${service.title} illustration`}/></div>}
     </div>
    </div>
   </article>;

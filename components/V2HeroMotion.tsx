@@ -218,8 +218,8 @@ export default function V2HeroMotion(){
         gsap.timeline({
           scrollTrigger:{
             trigger:manifesto,
-            start:'top 8%',
-            end:'top -62%',
+            start:'top 58%',
+            end:'top -20%',
             scrub:.75,
             invalidateOnRefresh:true
           }
@@ -294,18 +294,16 @@ export default function V2HeroMotion(){
         const budgetRing=impactSection.querySelector<SVGElement>('.budget-ring');
         const budgetCount=impactSection.querySelector<SVGTextElement>('.budget-count');
         const budgetLegend=impactSection.querySelector<SVGGElement>('.budget-legend');
-        const lastImpactCard=cards[cards.length-1];
         gsap.set(impactSection,{'--impact-title-opacity':0,'--impact-title-y':'72px','--impact-title-blur':'14px','--impact-title-lightness':'38%'});
         gsap.to(impactSection,{'--impact-title-opacity':1,'--impact-title-y':'0px','--impact-title-blur':'0px','--impact-title-lightness':'94%',ease:'none',scrollTrigger:{trigger:impactSection,start:'top 92%',end:'top 50%',scrub:1.05,invalidateOnRefresh:true}});
+        const lastImpactCard=cards[cards.length-1];
         if(lastImpactCard){
-          const stackedCardBottom=()=>parseFloat(getComputedStyle(lastImpactCard).top)+lastImpactCard.offsetHeight;
           gsap.fromTo(impactSection,{'--impact-title-opacity':1,'--impact-title-y':'0px','--impact-title-blur':'0px'},{'--impact-title-opacity':0,'--impact-title-y':'-120px','--impact-title-blur':'6px',immediateRender:false,ease:'none',scrollTrigger:{
-            trigger:impactSection,
-            // Keep the title intact until the final sticky card has joined the
-            // stack. It exits only when the section boundary starts pushing the
-            // completed stack upward.
-            start:()=>`bottom ${stackedCardBottom()}px`,
-            end:()=>`bottom ${Math.max(0,stackedCardBottom()-220)}px`,
+            trigger:lastImpactCard,
+            // Keep the title pinned through the stack, then move it away in
+            // sync with the final card as that card reaches its sticky position.
+            start:'top 70%',
+            end:'top 30%',
             scrub:1.05,
             invalidateOnRefresh:true
           }});
@@ -413,9 +411,14 @@ export default function V2HeroMotion(){
       const workCapabilitiesGroup=workCapabilitiesPanel?.querySelector<HTMLElement>(':scope > div');
       const workCapabilitiesChrome=workCapabilitiesPanel?Array.from(workCapabilitiesPanel.querySelectorAll<HTMLElement>(':scope > span,:scope > small')):[];
       const workCapabilityWords=workCapabilitiesPanel?Array.from(workCapabilitiesPanel.querySelectorAll<HTMLElement>('p b')):[];
-      const workCapabilitiesText=workCapabilitiesPanel?Array.from(workCapabilitiesPanel.querySelectorAll<HTMLElement>('span,p b,small')):[];
+      // Only recolor the capability-panel chrome and words. A broad `span`
+      // selector also caught the later Services overlay title, turning it white
+      // against its white background.
+      const workCapabilitiesText=workCapabilitiesPanel?Array.from(workCapabilitiesPanel.querySelectorAll<HTMLElement>(':scope > span, :scope > div p b, :scope > small')):[];
       const workCapabilityLetters=workCapabilitiesPanel?Array.from(workCapabilitiesPanel.querySelectorAll<HTMLElement>('.capability-letter')):[];
       const workZoomFlood=workCapabilitiesPanel?.querySelector<HTMLElement>('.work-zoom-flood');
+      const workZoomTitle=workZoomFlood?.querySelector<HTMLElement>('span');
+      const workZoomCopy=workZoomFlood?.querySelector<HTMLElement>('p');
       if(workSection&&workSticky){
         gsap.set(workSticky,{'--work-line-progress':0,'--work-plus-rotation':'0deg'});
         gsap.to(workSticky,{'--work-line-progress':1,'--work-plus-rotation':'540deg',ease:'none',scrollTrigger:{trigger:workSection,start:'top 80%',end:'top 42%',scrub:1.25,invalidateOnRefresh:true}});
@@ -434,6 +437,8 @@ export default function V2HeroMotion(){
         if(workCollectionPanel)gsap.set(workCollectionPanel,{y:0,autoAlpha:1,force3D:true});
         if(workCapabilitiesPanel)gsap.set(workCapabilitiesPanel,{y:0,autoAlpha:1,force3D:true});
         if(workZoomFlood)gsap.set(workZoomFlood,{autoAlpha:0});
+        if(workZoomTitle)gsap.set(workZoomTitle,{autoAlpha:0,y:54,scale:.9,filter:'blur(12px)'});
+        if(workZoomCopy)gsap.set(workZoomCopy,{autoAlpha:0,y:24,filter:'blur(8px)'});
         if(workCapabilitiesChrome.length)gsap.set(workCapabilitiesChrome,{autoAlpha:0});
         if(workCapabilityWords.length)gsap.set(workCapabilityWords,{x:0,y:0,autoAlpha:1,filter:'blur(0px)',force3D:true});
         if(workCapabilityLetters.length)gsap.set(workCapabilityLetters,{x:(index)=>34+(index%4)*9,y:(index)=>18+(index%3)*7,rotation:(index)=>index%2===0?-4:4,scale:.96,autoAlpha:0,filter:'blur(14px)',force3D:true});
@@ -476,9 +481,8 @@ export default function V2HeroMotion(){
             ease:'power2.out'
           },1.16);
         }
-        // Fade-to-black: as you scroll past the capabilities panel, the whole
-        // section fades to black and the lettering goes white. No zoom — after the
-        // black it simply scrolls on to the next section.
+        // Move from the capability wall into a short, readable Services title
+        // card before handing the scroll back to the services section.
         if(workCapabilitiesPanel){
           workTimeline.to(workCapabilitiesPanel,{
             backgroundColor:'#111111',
@@ -494,7 +498,7 @@ export default function V2HeroMotion(){
             },1.34);
           }
         }
-        if(workCapabilitiesGroup&&workZoomFlood){
+        if(workCapabilitiesGroup&&workZoomFlood&&workZoomTitle&&workZoomCopy){
           workTimeline
             .to(workCapabilitiesChrome,{
               autoAlpha:0,
@@ -511,10 +515,28 @@ export default function V2HeroMotion(){
             },1.76)
             .to(workZoomFlood,{
               autoAlpha:1,
-              duration:.3,
+              duration:.2,
               ease:'power1.inOut'
-            },2.78)
-            .to(workZoomFlood,{autoAlpha:1,duration:.38,ease:'none'},3.08);
+            },2.58)
+            .to(workZoomTitle,{
+              autoAlpha:1,
+              y:0,
+              scale:1,
+              filter:'blur(0px)',
+              duration:.28,
+              ease:'power3.out'
+            },2.62)
+            .to(workZoomCopy,{
+              autoAlpha:1,
+              y:0,
+              filter:'blur(0px)',
+              duration:.24,
+              ease:'power3.out'
+            },2.7)
+            // Give the title a real reading window. Previously it appeared for
+            // only the final sliver of this scrubbed timeline, so it was easy to
+            // skip entirely with a normal mouse-wheel gesture.
+            .to(workZoomTitle,{autoAlpha:1,duration:.34,ease:'none'},2.9);
         }
       }
 

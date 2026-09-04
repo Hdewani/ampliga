@@ -3,9 +3,9 @@ const steps=[['01','Discover','Understand the business, users, problems, process
 const work=[
 ['TRADEGHAR','REAL ESTATE / AI / WORKFLOW AUTOMATION','7 AI-classified property categories','/projects/tradeghar-platform.png','/case-studies/tradeghar-real-estate-automation.pdf'],
 ['SAROX TECHNOLOGY','ELECTRICAL TESTING / DESKTOP APPLICATION','55% projected faster report completion','/projects/sarox-testing-dashboard.png','/case-studies/sarox-electrical-testing-automation.pdf'],
-['SR FINCORP','FINANCIAL SERVICES / WEB / DIGITAL ENABLEMENT','+180% organic traffic in 90 days','/projects/sr-fincorp-digital-platform.jpg','https://fialetechnology.in/case-study-sr-fincorp/'],
-['HNM REALTORS','REAL ESTATE / META CAMPAIGNS / LEAD GENERATION','1.28M campaign impressions','/projects/hnm-meta-campaign.jpg','https://fialetechnology.in/hnm-meta-campaign/'],
-['PURELY SAATVIK','WELLNESS / BRAND / SHOPIFY COMMERCE','Global commerce with CRM automation','/projects/purely-saatvik-commerce.jpg','https://fialetechnology.in/purely-saatvik/']
+['SR FINCORP','FINANCIAL SERVICES / WEB / DIGITAL ENABLEMENT','+180% organic traffic in 90 days','/projects/sr-fincorp-digital-platform.jpg','https://ampliga.com/case-study-sr-fincorp/'],
+['HNM REALTORS','REAL ESTATE / META CAMPAIGNS / LEAD GENERATION','1.28M campaign impressions','/projects/hnm-meta-campaign.jpg','https://ampliga.com/hnm-meta-campaign/'],
+['PURELY SAATVIK','WELLNESS / BRAND / SHOPIFY COMMERCE','Global commerce with CRM automation','/projects/purely-saatvik-commerce.jpg','https://ampliga.com/purely-saatvik/']
 ];
 const technologies=['React','Next.js','Vue','Node.js','TypeScript','Python','FastAPI','PostgreSQL','MongoDB','AWS','Docker','OpenAI','Claude','Gemini','Shopify'];
 export default function OriginalHome(){return <><div className="project-cursor" aria-hidden="true">VIEW</div><header className="site-header"><a href="#top" className="wordmark logo-link" aria-label="Ampliga home"><Image src="/ampliga-logo.png" alt="Ampliga" width={58} height={42} priority/></a><nav><a href="#work">Work</a><a href="#about">About</a><a href="#technology">Insights</a></nav><a className="pill fixed-contact" href="#contact">Contact <span>↗</span></a><button className="hamb" aria-label="Open navigation"><i/><i/><i/></button></header><main id="top">

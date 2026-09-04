@@ -20,6 +20,7 @@ export default function StickyHeaderState(){
         const backdrop=document.elementFromPoint(window.innerWidth/2,Math.min(header.getBoundingClientRect().bottom-1,48));
         header.style.visibility=previousVisibility;
         const backdropIsLight=(node:Element|null)=>{
+          if(node?.closest('.scroll-services,.partner-testimonials,.swiss-contact'))return true;
           let current:Element|null=node;
           while(current&&current!==document.documentElement){
             const color=getComputedStyle(current).backgroundColor;
@@ -33,7 +34,18 @@ export default function StickyHeaderState(){
           }
           return true;
         };
-        const lightBackdrop=backdropIsLight(backdrop);
+        const zoomFlood=document.querySelector<HTMLElement>('.work-zoom-flood');
+        const floodStyle=zoomFlood?getComputedStyle(zoomFlood):null;
+        const floodRect=zoomFlood?.getBoundingClientRect();
+        const floodCoversHeader=Boolean(
+          zoomFlood&&floodStyle&&floodRect&&
+          floodStyle.visibility!=='hidden'&&Number(floodStyle.opacity)>.45&&
+          floodRect.top<=48&&floodRect.bottom>=48
+        );
+        const lightSurfaceSelector='.momentum-hero,.manifesto-transition-stage,.studio-manifesto,.services-section,.service-item,.partner-testimonials';
+        const backdropLayers=document.elementsFromPoint(window.innerWidth/2,Math.min(header.getBoundingClientRect().bottom-1,48));
+        const knownLightSurface=backdropLayers.some(layer=>Boolean(layer.closest(lightSurfaceSelector)));
+        const lightBackdrop=floodCoversHeader||knownLightSurface||backdropIsLight(backdrop);
         header.classList.toggle('is-on-light',lightBackdrop);
         header.classList.toggle('is-on-dark',!lightBackdrop);
       }else{

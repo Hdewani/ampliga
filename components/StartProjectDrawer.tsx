@@ -9,6 +9,7 @@ import {useEffect,useRef,useState} from 'react';
 export default function StartProjectDrawer(){
  const [open,setOpen]=useState(false);
  const [sent,setSent]=useState(false);
+ const [errors,setErrors]=useState<Record<string,string>>({});
  const panelRef=useRef<HTMLDivElement>(null);
  const firstFieldRef=useRef<HTMLInputElement>(null);
 
@@ -41,9 +42,21 @@ export default function StartProjectDrawer(){
  const close=()=>setOpen(false);
  const submit=(event:React.FormEvent<HTMLFormElement>)=>{
   event.preventDefault();
+  const data=new FormData(event.currentTarget);
+  const value=(name:string)=>String(data.get(name)??'').trim();
+  const nextErrors:Record<string,string>={};
+  if(!value('name'))nextErrors.name='Enter your full name';
+  const email=value('email');
+  if(!email||!/^\S+@\S+\.\S+$/.test(email))nextErrors.email='Enter a valid email';
+  if(!value('service'))nextErrors.service='Select a service';
+  if(value('project').length<20)nextErrors.project='Minimum 20 characters';
+  if(!value('budget'))nextErrors.budget='Select a budget';
+  if(Object.keys(nextErrors).length){setErrors(nextErrors);return}
+  setErrors({});
   // Front-end only for now — swap this for a POST to your enquiry endpoint.
   setSent(true);
  };
+ const clearError=(field:string)=>{if(errors[field])setErrors(current=>{const next={...current};delete next[field];return next})};
 
  return (
   <div className={`start-project-root${open?' is-open':''}`} aria-hidden={!open}>
@@ -52,14 +65,6 @@ export default function StartProjectDrawer(){
     <div className="start-project-info-cell">
      <b>Mail</b>
      <a href="mailto:hello@ampliga.com">hello@<br/>ampliga.com</a>
-    </div>
-    <div className="start-project-info-cell">
-     <b>Social</b>
-     <a href="https://instagram.com/ampliga" target="_blank" rel="noreferrer">Instagram<br/>@ampliga</a>
-    </div>
-    <div className="start-project-info-cell">
-     <b>Office</b>
-     <span>Gurugram,<br/>India</span>
     </div>
     <div className="start-project-info-cell">
      <b>Phone</b>
@@ -87,36 +92,31 @@ export default function StartProjectDrawer(){
       <button type="button" className="start-project-submit" onClick={close}>Close</button>
      </div>
     ):(
-     <form className="start-project-form" onSubmit={submit} noValidate={false}>
+     <form className="start-project-form" onSubmit={submit} noValidate>
       <header className="start-project-head">
-       <h2>Start a Project</h2>
+       <h2>Let&apos;s build something great.</h2>
+       <p>Tell us about your project, we usually<br/>reply within one business day.</p>
       </header>
 
       <section className="start-project-section">
-       <div className="start-project-section-head">
-        <span className="start-project-eyebrow">Contact details</span>
-        <span className="start-project-step">01</span>
-       </div>
-       <p className="start-project-hint">How can we contact you?</p>
        <div className="start-project-grid">
-        <input ref={firstFieldRef} name="name" type="text" placeholder="Your name*" required autoComplete="name"/>
-        <input name="company" type="text" placeholder="Company name*" required autoComplete="organization"/>
-        <input name="email" type="email" placeholder="Email address*" required autoComplete="email"/>
-        <input name="mobile" type="tel" placeholder="Mobile number*" required autoComplete="tel"/>
+        <label className={`start-project-field${errors.name?' has-error':''}`}><span>Full Name *</span>{errors.name&&<b>{errors.name}</b>}<input ref={firstFieldRef} name="name" type="text" placeholder="Full Name" onChange={()=>clearError('name')} aria-invalid={Boolean(errors.name)} autoComplete="name"/></label>
+        <label className={`start-project-field${errors.email?' has-error':''}`}><span>Email address *</span>{errors.email&&<b>{errors.email}</b>}<input name="email" type="email" placeholder="Email address" onChange={()=>clearError('email')} aria-invalid={Boolean(errors.email)} autoComplete="email"/></label>
+        <input name="company" type="text" placeholder="Company / Website name" autoComplete="organization"/>
+        <label className={`start-project-field${errors.service?' has-error':''}`}><span>Service *</span>{errors.service&&<b>{errors.service}</b>}<select name="service" defaultValue="" onChange={()=>clearError('service')} aria-invalid={Boolean(errors.service)} aria-label="Select a service">
+         <option value="" disabled>Select a service</option>
+         <option>Brand Strategy</option><option>Product Development</option><option>AI &amp; Automation</option><option>Digital Marketing</option><option>E-commerce Solutions</option><option>Content &amp; Creative Studio</option>
+        </select></label>
+        <label className={`start-project-field${errors.project?' has-error':''}`}><span>Project details *</span>{errors.project&&<b>{errors.project}</b>}<textarea name="project" placeholder="Share a little about your goals, timeline, and requirements…" onChange={()=>clearError('project')} aria-invalid={Boolean(errors.project)} rows={5}/></label>
+        <label className={`start-project-field${errors.budget?' has-error':''}`}><span>Estimated budget *</span>{errors.budget&&<b>{errors.budget}</b>}<select name="budget" defaultValue="" onChange={()=>clearError('budget')} aria-invalid={Boolean(errors.budget)} aria-label="Select your estimated budget">
+         <option value="" disabled>Select your estimated budget</option>
+         <option>Under ₹1 lakh</option><option>₹1–3 lakh</option><option>₹3–7 lakh</option><option>₹7–15 lakh</option><option>₹15 lakh+</option>
+        </select></label>
        </div>
-      </section>
-
-      <section className="start-project-section">
-       <div className="start-project-section-head">
-        <span className="start-project-eyebrow">Project information</span>
-        <span className="start-project-step">02</span>
-       </div>
-       <p className="start-project-hint">Tell us more about your project.</p>
-       <textarea name="project" placeholder="Tell us more about your project…*" required rows={6}/>
       </section>
 
       <div className="start-project-actions">
-       <button type="submit" className="start-project-submit">Submit Enquiry</button>
+       <button type="submit" className="start-project-submit"><span>Send inquiry</span><b aria-hidden="true">→</b></button>
       </div>
 
       <div className="start-project-or"><span>OR</span></div>
