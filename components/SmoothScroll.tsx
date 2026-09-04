@@ -20,6 +20,17 @@ export default function SmoothScroll(){
       if(!target)return;
       event.preventDefault();
       const longJump=Math.abs(target.getBoundingClientRect().top)>window.innerHeight*2;
+      // A long jump teleports, so the header lands on a completely different
+      // backdrop in one frame. Its .32s background/border/shadow transitions
+      // would then cross-fade the old pill into the new state -- a flash at the
+      // top of the screen. Suppress them across the jump so it just snaps.
+      // Released two frames later: StickyHeaderState re-classes the header in a
+      // rAF, and restoring in that same frame would still start a transition.
+      if(longJump){
+        const root=document.documentElement;
+        root.classList.add('is-scroll-jump');
+        requestAnimationFrame(()=>requestAnimationFrame(()=>root.classList.remove('is-scroll-jump')));
+      }
       lenis.scrollTo(target,{offset:-90,immediate:longJump,lock:!longJump});
       history.replaceState(null,'',hash);
     };

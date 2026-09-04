@@ -223,7 +223,7 @@ export default function V2HeroMotion(){
             scrub:.75,
             invalidateOnRefresh:true
           }
-        }).to(manifestoWords,{color:(index,word)=>index===0?'#ca0001':word.classList.contains('studio-manifesto-meaningful')?'#ca0001':'#080808',duration:.13,stagger:.052,ease:'none'});
+        }).to(manifestoWords,{color:(index,word)=>index===0?'#ca0001':word.classList.contains('studio-manifesto-accent')?'#ca0001':'#080808',duration:.13,stagger:.052,ease:'none'});
         const ruleTimeline=gsap.timeline({
           scrollTrigger:{
             trigger:manifesto,
@@ -298,15 +298,22 @@ export default function V2HeroMotion(){
         gsap.to(impactSection,{'--impact-title-opacity':1,'--impact-title-y':'0px','--impact-title-blur':'0px','--impact-title-lightness':'94%',ease:'none',scrollTrigger:{trigger:impactSection,start:'top 92%',end:'top 50%',scrub:1.05,invalidateOnRefresh:true}});
         const lastImpactCard=cards[cards.length-1];
         if(lastImpactCard){
-          gsap.fromTo(impactSection,{'--impact-title-opacity':1,'--impact-title-y':'0px','--impact-title-blur':'0px'},{'--impact-title-opacity':0,'--impact-title-y':'-120px','--impact-title-blur':'6px',immediateRender:false,ease:'none',scrollTrigger:{
+          gsap.timeline({scrollTrigger:{
             trigger:lastImpactCard,
-            // Keep the title pinned through the stack, then move it away in
-            // sync with the final card as that card reaches its sticky position.
-            start:'top 70%',
-            end:'top 30%',
+            // The stack locks to its centred sticky position near 25% of the
+            // viewport. Start only past that point so the title holds until the
+            // final card has actually settled, then carry the title and the
+            // whole stack out through the top together on the scroll that
+            // follows. The range stays inside the last card's bottom margin so
+            // it finishes before the card unsticks.
+            start:'top 20%',
+            end:'top -8%',
             scrub:1.05,
             invalidateOnRefresh:true
-          }});
+          }})
+            .fromTo(impactSection,{'--impact-title-opacity':1,'--impact-title-y':'0px','--impact-title-blur':'0px'},{'--impact-title-opacity':0,'--impact-title-y':'-120px','--impact-title-blur':'6px',immediateRender:false,ease:'none',duration:1},0)
+            // yPercent, not y: the per-card entry tween owns y.
+            .fromTo(cards,{yPercent:0,autoAlpha:1},{yPercent:-38,autoAlpha:0,immediateRender:false,ease:'none',duration:1},0);
         }
         if(springPath){
           const springLength=springPath.getTotalLength();
@@ -335,7 +342,7 @@ export default function V2HeroMotion(){
         gsap.set(avatars,{autoAlpha:0,x:-18,scale:.82,transformOrigin:'center'});
         gsap.set(trophy,{autoAlpha:0,y:12,transformOrigin:'center'});
         gsap.set(plus,{scale:.82,transformOrigin:'center'});
-        if(count) count.textContent='24%';
+        if(count) count.textContent='20%';
         cards.forEach(card=>gsap.fromTo(card,{y:70},{y:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:card,start:'top 68%',end:'top 36%',scrub:.7,invalidateOnRefresh:true}}));
         const artTimeline=(card:HTMLElement,end='top 12%')=>gsap.timeline({scrollTrigger:{trigger:card,start:'top 70%',end,scrub:.9,invalidateOnRefresh:true}});
         const projectsTl=artTimeline(cards[0]);
@@ -354,7 +361,7 @@ export default function V2HeroMotion(){
         artTimeline(cards[5]).to(avatars,{autoAlpha:1,x:0,scale:1,duration:.3,stagger:.07,ease:'back.out(1.8)'},0).to(plus,{scale:1.1,duration:.18,ease:'power2.out'},.45).to(plus,{scale:1,duration:.28,ease:'elastic.out(1,.5)'},.6);
         // The final card sticks near 26% of the viewport. Finish its artwork
         // before that point so the completed state is visible while it holds.
-        artTimeline(cards[6],'top 30%').to(budgetRing,{strokeDasharray:'24 76',duration:.65,ease:'power2.inOut'},0).to([budgetCount,budgetLegend],{autoAlpha:1,y:0,duration:.35,stagger:.1},.3);
+        artTimeline(cards[6],'top 30%').to(budgetRing,{strokeDasharray:'20 80',duration:.65,ease:'power2.inOut'},0).to([budgetCount,budgetLegend],{autoAlpha:1,y:0,duration:.35,stagger:.1},.3);
         cards.slice(0,-1).forEach((card,index)=>{
           const nextCard=cards[index+1];
           gsap.to(card,{
@@ -591,7 +598,7 @@ export default function V2HeroMotion(){
         // Services stays static (no reveal) on mobile too.
         // Selected work: each project card, then the capability words.
         revealOnScroll(Array.from(document.querySelectorAll<HTMLElement>('.swiss-work .project-card')),{y:56});
-        // Capability words (A.I. / Design / Development / Branding) stay visible on
+        // Capability words (Strategy / Design / Systems / Automation) stay visible on
         // mobile — the scroll-reveal was leaving them stuck hidden on phones.
         revealOnScroll([document.querySelector<HTMLElement>('.work-collection-panel h3'),document.querySelector<HTMLElement>('.work-collection-panel a')],{y:32,start:'top 90%'});
         revealOnScroll(testimonialCards,{y:46,stagger:.06,start:'top 91%'});

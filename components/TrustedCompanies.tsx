@@ -4,25 +4,25 @@ import Image from 'next/image';
 import {useEffect,useRef,useState} from 'react';
 
 const companies=[
- {name:'Ardor',logo:'/v2/client-logos/transparent/01.png'},
- {name:'SR Fincorp',logo:'/v2/client-logos/transparent/02.png'},
- {name:'Medvante',logo:'/v2/client-logos/transparent/03.png'},
- {name:'NiyoX',logo:'/v2/client-logos/transparent/04.png'},
- {name:'Induskart',logo:'/v2/client-logos/transparent/05.png'},
- {name:'My Pankhuri',logo:'/v2/client-logos/transparent/06.png'},
- {name:'Mrigaya',logo:'/v2/client-logos/transparent/07.png'},
- {name:'Monaris',logo:'/v2/client-logos/transparent/08.png'},
- {name:'Bizfinn',logo:'/v2/client-logos/transparent/09.png'},
- {name:'Lawyered',logo:'/v2/client-logos/transparent/10.png'},
- {name:'Fit Family',logo:'/v2/client-logos/transparent/11.png'},
- {name:'Trade Ghar',logo:'/v2/client-logos/transparent/12.png'},
- {name:'Isotech India',logo:'/v2/client-logos/transparent/20.png'},
- {name:'EnergyExp',logo:'/v2/client-logos/transparent/21.png'},
- {name:'Library of Joy',logo:'/v2/client-logos/transparent/22.png'},
- {name:'HNM Realtors',logo:'/v2/client-logos/transparent/23.png'},
- {name:'Fundz360',logo:'/v2/client-logos/transparent/24.png'},
- {name:'Ecolink',logo:'/v2/client-logos/transparent/25.png'},
- {name:'Consumer Mitra',logo:'/v2/client-logos/transparent/26.png'}
+ {name:'Ardor',logo:'/logos/transparent/01.png'},
+ {name:'SR Fincorp',logo:'/logos/transparent/02.png'},
+ {name:'Medvante',logo:'/logos/transparent/03.png'},
+ {name:'NiyoX',logo:'/logos/transparent/04.png'},
+ {name:'Induskart',logo:'/logos/transparent/05.png'},
+ {name:'My Pankhuri',logo:'/logos/transparent/06.png'},
+ {name:'Mrigaya',logo:'/logos/transparent/07.png'},
+ {name:'Monaris',logo:'/logos/transparent/08.png'},
+ {name:'Bizfinn',logo:'/logos/transparent/09.png'},
+ {name:'Lawyered',logo:'/logos/transparent/10.png'},
+ {name:'Fit Family',logo:'/logos/transparent/11.png'},
+ {name:'Trade Ghar',logo:'/logos/transparent/12.png'},
+ {name:'Isotech India',logo:'/logos/transparent/20.png'},
+ {name:'EnergyExp',logo:'/logos/transparent/21.png'},
+ {name:'Library of Joy',logo:'/logos/transparent/22.png'},
+ {name:'HNM Realtors',logo:'/logos/transparent/23.png'},
+ {name:'Fundz360',logo:'/logos/transparent/24.png'},
+ {name:'Ecolink',logo:'/logos/transparent/25.png'},
+ {name:'Consumer Mitra',logo:'/logos/transparent/26.png'}
 ];
 
 type LogoPhase='idle'|'out'|'in';

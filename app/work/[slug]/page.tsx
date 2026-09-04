@@ -88,10 +88,10 @@ export default function WorkCaseStudy({params}:{params:{slug:string}}){
   const previous=studies[(current-1+studies.length)%studies.length];
   const next=studies[(current+1)%studies.length];
   return <main className="case-page"><ProjectPageTransition/>
-    <header className="case-header"><Link href="/v2" className="case-logo"><Image src="/ampliga-logo.png" alt="Ampliga" width={58} height={42}/></Link><Link href="/v2#contact" className="case-contact">Contact <span>↗</span></Link></header>
+    <header className="case-header"><Link href="/" className="case-logo"><Image src="/ampliga-logo.png" alt="Ampliga" width={58} height={42}/></Link><Link href="/v2#contact" className="case-contact">Contact <span>↗</span></Link></header>
     <div className="case-layout">
       <aside className="case-sidebar">
-        <Link className="case-back" href="/v2#work">← &nbsp; Back to work</Link>
+        <Link className="case-back" href="/#work">← &nbsp; Back to work</Link>
         <div className="case-identity"><h1>{study.title}</h1><p>{study.summary}</p><ul>{study.services.map(service=><li key={service}>{service}</li>)}</ul>{study.facts&&<dl className="case-facts">{study.facts.map(fact=><div key={fact.label}><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}</dl>}</div>
       </aside>
       <article className="case-content">
@@ -103,8 +103,8 @@ export default function WorkCaseStudy({params}:{params:{slug:string}}){
       </article>
     </div>
     <footer className="case-project-footer">
-      <Link className="case-footer-prev" href={`/v2/work/${previous.slug}`} data-project-transition>← Previous project: {previous.title}</Link>
-      <Link className="case-footer-next" href={`/v2/work/${next.slug}`} data-project-transition>Next project: {next.title} →</Link>
+      <Link className="case-footer-prev" href={`/work/${previous.slug}`} data-project-transition>← Previous project: {previous.title}</Link>
+      <Link className="case-footer-next" href={`/work/${next.slug}`} data-project-transition>Next project: {next.title} →</Link>
     </footer>
   </main>;
 }
