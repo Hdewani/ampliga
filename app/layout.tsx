@@ -3,7 +3,7 @@ import './globals.css';
 import ScrollAnimations from '@/components/ScrollAnimations';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://ampliga.com'),
+  metadataBase: new URL('https://www.ampliga.com'),
   title: 'Ampliga — Build. Automate. Grow.',
   description: 'Technology, AI automation and growth systems for ambitious businesses.',
   icons: {
