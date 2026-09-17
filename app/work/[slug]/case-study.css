@@ -44,10 +44,10 @@
 .case-section+ .case-section{position:relative}
 .case-section+ .case-section:before{content:"";position:absolute;left:calc(58px + clamp(28px,4vw,64px));top:0;width:54px;height:2px;background:#343434}
 .case-section>span{padding-top:11px;font:500 11px/1 "JetBrains Mono",monospace;letter-spacing:.08em}
-.case-section h2{margin:0 0 clamp(38px,5vw,68px);font-size:clamp(46px,5vw,78px);line-height:.96;letter-spacing:-.055em}
+.case-section h2{margin:0 0 clamp(28px,3.5vw,46px);font-size:clamp(34px,3.2vw,52px);line-height:1.02;letter-spacing:-.045em}
 .case-rich-body{max-width:820px}
 .case-rich-body>p{max-width:720px;margin-bottom:28px;font-size:17px;line-height:1.75}
-.case-rich-body>p:first-child{font-size:clamp(20px,1.8vw,26px);line-height:1.55}
+.case-rich-body>p:first-child{font-size:17px;line-height:1.7}
 .case-rich-body h3{position:relative;margin:64px 0 24px;padding-left:48px;color:#f3f1eb;font-size:clamp(23px,2vw,30px);line-height:1.2;letter-spacing:-.025em}
 .case-rich-body h3:before{content:"";position:absolute;left:0;top:.58em;width:26px;height:2px;background:#ca0001}
 .case-rich-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0 0 44px;padding:0;border:0}
@@ -60,4 +60,8 @@
 .case-study-end-marker{border:0}
 .case-project-footer{border-top:0;box-shadow:0 -10px 34px rgba(0,0,0,.24)}
 .case-footer-prev{border-right:0}
-@media(max-width:900px){.case-sidebar{border-bottom:0}.case-content{padding-left:20px;padding-right:20px}.case-section{grid-template-columns:26px minmax(0,1fr);gap:14px;padding:64px 0}.case-section+ .case-section:before{left:40px}.case-section h2{font-size:clamp(38px,11vw,58px);margin-bottom:36px}.case-rich-list{grid-template-columns:1fr}.case-rich-list li{min-height:0}.case-rich-body h3{margin-top:48px;padding-left:38px}.case-rich-body h3:before{width:22px}}
+@media(max-width:900px){.case-sidebar{border-bottom:0}.case-content{padding-left:20px;padding-right:20px}.case-section{grid-template-columns:26px minmax(0,1fr);gap:14px;padding:64px 0}.case-section+ .case-section:before{left:40px}.case-section h2{font-size:clamp(32px,8.5vw,44px);margin-bottom:30px}.case-rich-list{grid-template-columns:1fr}.case-rich-list li{min-height:0}.case-rich-body h3{margin-top:48px;padding-left:38px}.case-rich-body h3:before{width:22px}}
+
+/* Project artwork is square: give cover media enough height to retain its composition. */
+.case-hero{aspect-ratio:1/1;max-height:none}
+.case-hero img{object-fit:cover}

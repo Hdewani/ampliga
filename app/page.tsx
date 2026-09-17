@@ -2,7 +2,15 @@ import type {Metadata} from 'next';
 import V2Page from '@/components/V2Page';
 import './site.css';
 
-export const metadata:Metadata={title:'Ampliga — We Build What Moves Businesses Forward',description:'Strategy, design, technology, AI and growth systems for ambitious businesses.'};
+const homeTitle='Ampliga — We Build What Moves Businesses Forward';
+const homeDescription='Strategy, design, technology, AI and growth systems for ambitious businesses.';
+export const metadata:Metadata={
+ title:{absolute:homeTitle},
+ description:homeDescription,
+ alternates:{canonical:'/'},
+ openGraph:{title:homeTitle,description:homeDescription,url:'/',siteName:'Ampliga',type:'website',images:[{url:'https://www.ampliga.com/opengraph-image',width:1200,height:630,alt:'Ampliga — strategy, design, technology, AI and growth'}]},
+ twitter:{card:'summary_large_image',title:homeTitle,description:homeDescription,images:['https://www.ampliga.com/opengraph-image']}
+};
 
 const websiteSchema={
  '@context':'https://schema.org',
@@ -21,6 +29,15 @@ const organizationSchema={
  url:'https://www.ampliga.com/',
  logo:'https://www.ampliga.com/ampliga-logo.png',
  email:'hello@ampliga.com',
+ telephone:'+91-99990-28398',
+ foundingDate:'2009',
+ contactPoint:{
+  '@type':'ContactPoint',
+  contactType:'sales and customer enquiries',
+  telephone:'+91-99990-28398',
+  email:'hello@ampliga.com',
+  availableLanguage:['English','Hindi']
+ },
  description:'An independent digital studio creating brand, technology, AI automation and growth systems.'
 };
 

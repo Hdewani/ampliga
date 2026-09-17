@@ -3,7 +3,9 @@ import type React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import ProjectPageTransition from '@/components/ProjectPageTransition';
+import StartProjectDrawer from '@/components/StartProjectDrawer';
 import { notFound } from 'next/navigation';
+import '../../site.css';
 import './case-study.css';
 
 type Study = {
@@ -65,7 +67,16 @@ const studies:Study[]=[
 export function generateStaticParams(){return studies.map(({slug})=>({slug}));}
 export function generateMetadata({params}:{params:{slug:string}}):Metadata{
   const study=studies.find(item=>item.slug===params.slug);
-  return {title:study?`${study.title} — Ampliga case study`:'Case study — Ampliga',description:study?.summary};
+  if(!study)return {title:'Case study',robots:{index:false,follow:false}};
+  const title=`${study.title} — Ampliga case study`;
+  const url=`/work/${study.slug}`;
+  return {
+   title:{absolute:title},
+   description:study.summary,
+   alternates:{canonical:url},
+   openGraph:{title,description:study.summary,url,siteName:'Ampliga',type:'article',images:[{url:`https://www.ampliga.com${study.image}`,width:1254,height:1254,alt:`${study.title} project overview`}]},
+   twitter:{card:'summary_large_image',title,description:study.summary,images:[`https://www.ampliga.com${study.image}`]}
+  };
 }
 
 const editorialLabels=['The Challenge','The Solution','Problems:','Before:','After:','Approach:','Outcome:'];
@@ -87,8 +98,36 @@ export default function WorkCaseStudy({params}:{params:{slug:string}}){
   const current=studies.findIndex(item=>item.slug===study.slug);
   const previous=studies[(current-1+studies.length)%studies.length];
   const next=studies[(current+1)%studies.length];
+  const pageUrl=`https://www.ampliga.com/work/${study.slug}`;
+  const creativeWorkSchema={
+   '@context':'https://schema.org',
+   '@type':'CreativeWork',
+   '@id':`${pageUrl}#case-study`,
+   name:`${study.title} — Ampliga case study`,
+   headline:study.title,
+   description:study.summary,
+   url:pageUrl,
+   mainEntityOfPage:pageUrl,
+   dateModified:'2026-09-18',
+   image:`https://www.ampliga.com${study.image}`,
+   keywords:study.services.join(', '),
+   creator:{'@id':'https://www.ampliga.com/#organization'},
+   publisher:{'@id':'https://www.ampliga.com/#organization'},
+   inLanguage:'en'
+  };
+  const breadcrumbSchema={
+   '@context':'https://schema.org',
+   '@type':'BreadcrumbList',
+   itemListElement:[
+    {'@type':'ListItem',position:1,name:'Home',item:'https://www.ampliga.com/'},
+    {'@type':'ListItem',position:2,name:'Work',item:'https://www.ampliga.com/#work'},
+    {'@type':'ListItem',position:3,name:study.title,item:pageUrl}
+   ]
+  };
   return <main className="case-page"><ProjectPageTransition/>
-    <header className="case-header"><Link href="/" className="case-logo"><Image src="/ampliga-logo.png" alt="Ampliga" width={58} height={42}/></Link><Link href="/v2#contact" className="case-contact">Contact <span>↗</span></Link></header>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(creativeWorkSchema)}}/>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(breadcrumbSchema)}}/>
+    <header className="case-header"><Link href="/" className="case-logo"><Image src="/ampliga-logo.png" alt="Ampliga" width={58} height={42}/></Link><a href="#contact" className="case-contact" data-start-project>Contact <span>↗</span></a></header>
     <div className="case-layout">
       <aside className="case-sidebar">
         <Link className="case-back" href="/#work">← &nbsp; Back to work</Link>
@@ -106,5 +145,6 @@ export default function WorkCaseStudy({params}:{params:{slug:string}}){
       <Link className="case-footer-prev" href={`/work/${previous.slug}`} data-project-transition>← Previous project: {previous.title}</Link>
       <Link className="case-footer-next" href={`/work/${next.slug}`} data-project-transition>Next project: {next.title} →</Link>
     </footer>
+    <StartProjectDrawer/>
   </main>;
 }

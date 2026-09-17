@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import '../legal.css';
 
-export const metadata:Metadata={title:'Terms & Conditions — Ampliga',description:'The terms that govern your use of Ampliga’s website and services.'};
+export const metadata:Metadata={title:'Terms & Conditions',description:'The terms that govern your use of Ampliga’s website and services.',alternates:{canonical:'/terms'}};
 
 export default function TermsAndConditions(){
  return <div className="legal-page">

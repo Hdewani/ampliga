@@ -3,7 +3,6 @@ import type {MetadataRoute} from 'next';
 export default function robots():MetadataRoute.Robots{
  return {
   rules:{userAgent:'*',allow:'/'},
-  sitemap:'https://www.ampliga.com/sitemap.xml',
-  host:'https://www.ampliga.com'
+  sitemap:'https://www.ampliga.com/sitemap.xml'
  };
 }

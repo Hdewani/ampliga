@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import '../legal.css';
 
-export const metadata:Metadata={title:'Privacy Policy — Ampliga',description:'How Ampliga collects, uses, and protects your personal information.'};
+export const metadata:Metadata={title:'Privacy Policy',description:'How Ampliga collects, uses, and protects your personal information.',alternates:{canonical:'/privacy'}};
 
 export default function PrivacyPolicy(){
  return <div className="legal-page">
@@ -16,7 +16,7 @@ export default function PrivacyPolicy(){
    <p className="legal-eyebrow">Legal</p>
    <h1>Privacy <em>Policy</em></h1>
    <p className="legal-updated">Last updated: 03 September 2025</p>
-   <p className="legal-intro">This Privacy Policy explains how Ampliga (“Ampliga”, “we”, “us”, “our”) collects, uses, shares, and protects your personal information when you engage with our website and services. Website: <a href="https://ampliga.com">https://ampliga.com</a> · Email: <a href="mailto:hello@ampliga.com">hello@ampliga.com</a> · Registered address: Plot No 1, Vijay Vihar, Behind Star Mall, Silokhera, Gurgaon, Haryana, India.</p>
+   <p className="legal-intro">This Privacy Policy explains how Ampliga (“Ampliga”, “we”, “us”, “our”) collects, uses, shares, and protects your personal information when you engage with our website and services. Website: <a href="https://www.ampliga.com/">https://www.ampliga.com/</a> · Email: <a href="mailto:hello@ampliga.com">hello@ampliga.com</a> · Registered address: Plot No 1, Vijay Vihar, Behind Star Mall, Silokhera, Gurgaon, Haryana, India.</p>
 
    <section>
     <h2><span className="num">01</span>Information We Collect</h2>

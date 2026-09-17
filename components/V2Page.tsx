@@ -1,4 +1,3 @@
-import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import type {CSSProperties} from 'react';
@@ -12,7 +11,6 @@ import ContactMarquee from '@/components/ContactMarquee';
 import StartProjectDrawer from '@/components/StartProjectDrawer';
 import MobileMenu from '@/components/MobileMenu';
 
-export const metadata: Metadata = { title: 'Ampliga — We Build What Moves Businesses Forward', description: 'Independent digital studio building brands, digital systems, AI automation and growth marketing for ambitious businesses.' };
 const studioManifesto='Ampliga is an independent studio building brands, digital systems and growth for companies that intend to win.'.split(' ');
 const projects=[
  {n:'01',name:'Tradeghar',kind:'AI-powered real estate intelligence',result:'Verified requirements and smarter property matching',image:'/projects/tradeghar-ai-real-estate.png',href:'/work/tradeghar'},
