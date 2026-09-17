@@ -3,6 +3,7 @@ import type React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import ProjectPageTransition from '@/components/ProjectPageTransition';
+import CaseSectionIndex from '@/components/CaseSectionIndex';
 import StartProjectDrawer from '@/components/StartProjectDrawer';
 import { notFound } from 'next/navigation';
 import '../../site.css';
@@ -47,7 +48,7 @@ const studies:Study[]=[
     {title:'Results',body:'The collaboration translated Purely Saatvik’s vision into a strong, scalable digital presence aligned with its values and market ambitions.\n● Brand perception: A clearly defined identity positioned Purely Saatvik as a trusted wellness brand with global appeal.\n● Packaging impact: Refined packaging elevated confidence across retail and online touchpoints.\n● E-commerce growth: A conversion-optimized store simplified customer journeys, supported international transactions and expanded orders across geographies.\n● Marketing ROI: Data-backed campaigns improved lead quality, while automated systems nurtured retention and repeat buyers.'},
     {title:'Conclusion',body:'Through branding, packaging design, e-commerce enablement and digital marketing, the Purely Saatvik concept became a globally scalable wellness brand. The project demonstrates how a holistic digital ecosystem—executed strategically—can drive measurable impact in the competitive D2C wellness space.'}
   ]},
-  {slug:'hnm-meta-campaign',title:'HNM Realtors',summary:'A full-funnel Meta campaign that turned commercial real-estate awareness into qualified investor conversations across India.',image:'/projects/hnm-meta-campaign-creative-v2.png',services:['Meta Advertising','Lead Generation','Retargeting','Campaign Strategy'],facts:[
+  {slug:'hnm-realtors',title:'HNM Realtors',summary:'A full-funnel Meta campaign that turned commercial real-estate awareness into qualified investor conversations across India.',image:'/projects/hnm-meta-campaign-creative-v2.png',services:['Meta Advertising','Lead Generation','Retargeting','Campaign Strategy'],facts:[
     {label:'Client',value:'HNM Realtors'},
     {label:'Service',value:'Meta Performance Campaign'},
     {label:'Industry',value:'Commercial Real Estate'},
@@ -86,7 +87,12 @@ function StructuredBody({body}:{body:string}){
   prepared=prepared.replace(/\s*●\s*/g,'\n• ').replace(/(?<!#)\s+(?=(?:\d{1,2})\.\s+[A-Z])/g,'\n');
   const lines=prepared.split(/\n+/).map(line=>line.trim()).filter(Boolean);
   const nodes:React.ReactNode[]=[]; let bullets:string[]=[];
-  const flush=()=>{if(bullets.length){nodes.push(<ul className="case-rich-list" key={`list-${nodes.length}`}>{bullets.map((item,index)=><li key={index}>{item}</li>)}</ul>);bullets=[];}};
+  const flush=()=>{if(bullets.length){nodes.push(<ul className="case-rich-list" key={`list-${nodes.length}`}>{bullets.map((item,index)=>{
+    // Several studies write bullets as "Label: explanation"; lead with the label
+    // so the list scans, and fall back to plain text where there is no label.
+    const labelled=item.match(/^([^:]{3,60}):\s+([\s\S]+)$/);
+    return <li key={index}>{labelled&&<strong>{labelled[1]}</strong>}<p>{labelled?labelled[2]:item}</p></li>;
+  })}</ul>);bullets=[];}};
   lines.forEach((line,index)=>{if(line.startsWith('• ')){bullets.push(line.slice(2));return;} flush(); if(line.startsWith('## ')){nodes.push(<h3 key={`heading-${index}`}>{line.slice(3)}</h3>);return;} const step=line.match(/^(\d{1,2})\.\s+(.+)/); if(step){nodes.push(<div className="case-step" key={`step-${index}`}><b>{step[1].padStart(2,'0')}</b><p>{step[2]}</p></div>);return;} nodes.push(<p key={`paragraph-${index}`}>{line}</p>);}); flush();
   return <div className="case-rich-body">{nodes}</div>;
 }
@@ -130,8 +136,8 @@ export default function WorkCaseStudy({params}:{params:{slug:string}}){
     <header className="case-header"><Link href="/" className="case-logo"><Image src="/ampliga-logo.png" alt="Ampliga" width={58} height={42}/></Link><a href="#contact" className="case-contact" data-start-project>Contact <span>↗</span></a></header>
     <div className="case-layout">
       <aside className="case-sidebar">
-        <Link className="case-back" href="/#work">← &nbsp; Back to work</Link>
         <div className="case-identity"><h1>{study.title}</h1><p>{study.summary}</p><ul>{study.services.map(service=><li key={service}>{service}</li>)}</ul>{study.facts&&<dl className="case-facts">{study.facts.map(fact=><div key={fact.label}><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}</dl>}</div>
+        <CaseSectionIndex titles={sections.map(section=>section.title)}/>
       </aside>
       <article className="case-content">
         <div className="case-hero"><Image src={study.image} alt={`${study.title} project overview`} fill priority sizes="(max-width: 900px) 100vw, 66vw"/></div>

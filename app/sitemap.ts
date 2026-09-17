@@ -9,7 +9,7 @@ export default function sitemap():MetadataRoute.Sitemap{
   'jp-associates',
   'sarox',
   'purely-saatvik',
-  'hnm-meta-campaign'
+  'hnm-realtors'
  ];
 
  return [

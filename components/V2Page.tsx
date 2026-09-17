@@ -17,7 +17,7 @@ const projects=[
  {n:'02',name:'JP Associates',kind:'Trademark intelligence • Python, Playwright, Beautiful Soup & SQL',result:'70 lakh+ records with continuously updated TMC reports',image:'/projects/jp-associates-trademark-monitoring.png',href:'/work/jp-associates'},
  {n:'03',name:'Sarox',kind:'Electrical testing automation',result:'55% faster reporting',image:'/projects/sarox-testing-dashboard.png',href:'/work/sarox'},
  {n:'04',name:'Purely Saatvik',kind:'Ayurvedic wellness • Branding, packaging & Shopify',result:'A premium wellness brand built for global growth',image:'/projects/purely-saatvik-brand-commerce.png',href:'/work/purely-saatvik'},
- {n:'05',name:'HNM Realtors',kind:'Commercial real estate • Meta performance campaign',result:'1,197 leads at ₹274 each, from ₹3.3L spend',image:'/projects/hnm-meta-campaign-creative-v2.png',href:'/work/hnm-meta-campaign'}
+ {n:'05',name:'HNM Realtors',kind:'Commercial real estate • Meta performance campaign',result:'1,197 leads at ₹274 each, from ₹3.3L spend',image:'/projects/hnm-meta-campaign-creative-v2.png',href:'/work/hnm-realtors'}
 ];
 const scrollServices=[
  {number:'01',title:'Brand Strategy',tags:['Brand identity','Positioning','Guidelines'],description:'We don’t sell you a logo. We build the reason customers pick you over the cheaper option — positioning, identity, and the rules that keep it consistent.',image:'/services/brand-strategy.png',video:'/services/brand-strategy'},
