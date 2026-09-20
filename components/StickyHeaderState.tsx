@@ -9,10 +9,29 @@ export default function StickyHeaderState(){
     if(!header||!hero)return;
 
     let frame=0;
+    let lastScrollY=Math.max(0,window.scrollY);
+    let upwardDistance=0;
     const update=()=>{
       frame=0;
+      const currentScrollY=Math.max(0,window.scrollY);
       const compact=hero.getBoundingClientRect().bottom<=header.offsetHeight;
       header.classList.toggle('is-compact',compact);
+
+      if(!compact){
+        upwardDistance=0;
+        header.classList.remove('is-scroll-hidden','is-scroll-visible');
+      }else if(currentScrollY<lastScrollY-4){
+        upwardDistance+=lastScrollY-currentScrollY;
+        if(upwardDistance>=160){
+          header.classList.remove('is-scroll-hidden');
+          header.classList.add('is-scroll-visible');
+        }
+      }else if(currentScrollY>lastScrollY+6){
+        upwardDistance=0;
+        header.classList.add('is-scroll-hidden');
+        header.classList.remove('is-scroll-visible');
+      }
+      lastScrollY=currentScrollY;
 
       if(compact){
         const previousVisibility=header.style.visibility;
@@ -64,7 +83,7 @@ export default function StickyHeaderState(){
       if(frame)cancelAnimationFrame(frame);
       window.removeEventListener('scroll',schedule);
       window.removeEventListener('resize',schedule);
-      header.classList.remove('is-compact','is-on-light','is-on-dark');
+      header.classList.remove('is-compact','is-on-light','is-on-dark','is-scroll-hidden','is-scroll-visible');
     };
   },[]);
 

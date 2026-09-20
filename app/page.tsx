@@ -2,8 +2,8 @@ import type {Metadata} from 'next';
 import V2Page from '@/components/V2Page';
 import './site.css';
 
-const homeTitle='Ampliga — We Build What Moves Businesses Forward';
-const homeDescription='Strategy, design, technology, AI and growth systems for ambitious businesses.';
+const homeTitle='Ampliga | Strategy, Design, Technology & Growth';
+const homeDescription='Ampliga is a digital agency helping businesses with strategy, branding, websites, software, AI automation, digital marketing and growth.';
 export const metadata:Metadata={
  title:{absolute:homeTitle},
  description:homeDescription,
@@ -18,7 +18,8 @@ const websiteSchema={
  '@id':'https://www.ampliga.com/#website',
  name:'Ampliga',
  alternateName:['Ampliga Studio','Ampliga Digital Studio'],
- url:'https://www.ampliga.com/'
+ url:'https://www.ampliga.com/',
+ publisher:{'@id':'https://www.ampliga.com/#organization'}
 };
 
 const organizationSchema={
@@ -27,7 +28,10 @@ const organizationSchema={
  '@id':'https://www.ampliga.com/#organization',
  name:'Ampliga',
  url:'https://www.ampliga.com/',
- logo:'https://www.ampliga.com/ampliga-logo.png',
+ logo:{
+  '@type':'ImageObject',
+  url:'https://www.ampliga.com/ampliga-logo.png'
+ },
  email:'hello@ampliga.com',
  telephone:'+91-99990-28398',
  foundingDate:'2009',
@@ -38,7 +42,7 @@ const organizationSchema={
   email:'hello@ampliga.com',
   availableLanguage:['English','Hindi']
  },
- description:'An independent digital studio creating brand, technology, AI automation and growth systems.'
+ description:'Ampliga is a digital agency specializing in strategy, branding, websites, software, AI automation, digital marketing and growth.'
 };
 
 export default function Home(){return <>

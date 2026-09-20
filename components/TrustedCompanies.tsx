@@ -30,7 +30,7 @@ type LogoPhase='idle'|'out'|'in';
 function CompanyCard({slot,companyIndex,phase,onHover}:{slot:number;companyIndex:number;phase:LogoPhase;onHover:(slot:number,hovered:boolean)=>void}){
  const company=companies[companyIndex];
  return <article className={`trusted-company-card trusted-logo-${phase}`} onMouseEnter={()=>onHover(slot,true)} onMouseLeave={()=>onHover(slot,false)} onFocus={()=>onHover(slot,true)} onBlur={()=>onHover(slot,false)} tabIndex={0} aria-label={company.name}>
-  <div className="trusted-company-logo"><Image src={company.logo} alt="" width={260} height={120}/></div>
+  <div className="trusted-company-logo"><Image src={company.logo} alt="" width={260} height={120} sizes="(max-width: 760px) 30vw, 140px" quality={65}/></div>
   <span>{company.name}</span>
  </article>;
 }

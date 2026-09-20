@@ -69,7 +69,7 @@ export function generateStaticParams(){return studies.map(({slug})=>({slug}));}
 export function generateMetadata({params}:{params:{slug:string}}):Metadata{
   const study=studies.find(item=>item.slug===params.slug);
   if(!study)return {title:'Case study',robots:{index:false,follow:false}};
-  const title=`${study.title} — Ampliga case study`;
+  const title=`${study.title} Case Study | Ampliga`;
   const url=`/work/${study.slug}`;
   return {
    title:{absolute:title},
@@ -109,7 +109,7 @@ export default function WorkCaseStudy({params}:{params:{slug:string}}){
    '@context':'https://schema.org',
    '@type':'CreativeWork',
    '@id':`${pageUrl}#case-study`,
-   name:`${study.title} — Ampliga case study`,
+   name:`${study.title} Case Study | Ampliga`,
    headline:study.title,
    description:study.summary,
    url:pageUrl,
@@ -142,6 +142,7 @@ export default function WorkCaseStudy({params}:{params:{slug:string}}){
       <article className="case-content">
         <div className="case-hero"><Image src={study.image} alt={`${study.title} project overview`} fill priority sizes="(max-width: 900px) 100vw, 66vw"/></div>
         <div className="case-document">
+          <p className="case-brand-intro">Ampliga worked with {study.title} to deliver {study.services.join(', ').toLowerCase()} through one connected strategy.</p>
           {sections.map((section,index)=><section className="case-section" id={`section-${index}`} key={`${section.title}-${index}`}><span>{String(index+1).padStart(2,'0')}</span><div><h2>{section.title}</h2><StructuredBody body={section.body}/></div></section>)}
         </div>
         <div className="case-study-end-marker"><span>End of case study</span></div>

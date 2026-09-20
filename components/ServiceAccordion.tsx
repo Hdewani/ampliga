@@ -38,7 +38,7 @@ export default function ServiceAccordion({services}:{services:Service[]}){
      <ul className="service-item-tags">{service.tags.map(tag=><li key={tag}>{tag}</li>)}</ul>
      <div className="service-item-copy">
       <p>{service.description}</p>
-      <button className="service-item-cta" type="button" data-start-project>Start a project<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></button>
+      <button className="service-item-cta" type="button" tabIndex={isOpen?0:-1} data-start-project>Start a project<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></button>
      </div>
      {service.video&&<div className="service-item-visual">{isOpen&&ext&&<video src={`${service.video}.${ext}`} poster={service.image} autoPlay muted loop playsInline preload="none" aria-hidden="true"/>}</div>}
     </div>

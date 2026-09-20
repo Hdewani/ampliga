@@ -16,7 +16,7 @@ export default function PartnerTestimonials(){
   const context=canvas?.getContext('2d');
   if(!canvas||!section||!context)return;
   const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let width=0,height=0,dpr=1,frame=0,start=performance.now();
+  let width=0,height=0,dpr=1,frame=0,start=performance.now(),running=false;
   let pointerX=.5,pointerY=.5,targetX=.5,targetY=.5;
   const resize=()=>{
    const rect=section.getBoundingClientRect();
@@ -43,11 +43,20 @@ export default function PartnerTestimonials(){
      context.fillStyle=`rgba(60,60,60,${.06+depth*.12})`;context.fill();
     }
    }
-   if(!reduceMotion)frame=requestAnimationFrame(draw);
+   if(!reduceMotion&&running)frame=requestAnimationFrame(draw);
   };
-  resize();draw(performance.now());
+  const setRunning=(next:boolean)=>{
+   if(reduceMotion||running===next)return;
+   running=next;
+   if(running){start=performance.now();frame=requestAnimationFrame(draw)}
+   else cancelAnimationFrame(frame);
+  };
+  const observer=new IntersectionObserver(([entry])=>setRunning(entry.isIntersecting),{rootMargin:'200px'});
+  resize();
+  if(reduceMotion)draw(performance.now());
+  else observer.observe(section);
   window.addEventListener('resize',resize);section.addEventListener('pointermove',move);section.addEventListener('pointerleave',leave);
-  return()=>{cancelAnimationFrame(frame);window.removeEventListener('resize',resize);section.removeEventListener('pointermove',move);section.removeEventListener('pointerleave',leave)};
+  return()=>{running=false;cancelAnimationFrame(frame);observer.disconnect();window.removeEventListener('resize',resize);section.removeEventListener('pointermove',move);section.removeEventListener('pointerleave',leave)};
  },[]);
  return <section className="partner-testimonials" aria-labelledby="partner-testimonials-title">
   <canvas ref={canvasRef} className="partner-testimonials-canvas" aria-hidden="true"/>

@@ -8,7 +8,17 @@ export default function V2HeroMotion(){
   useLayoutEffect(()=>{
     const previousScrollRestoration=window.history.scrollRestoration;
     if('scrollRestoration' in window.history) window.history.scrollRestoration='manual';
-    window.scrollTo(0,0);
+    const initialHash=decodeURIComponent(window.location.hash.slice(1));
+    const initialTarget=initialHash?document.getElementById(initialHash):null;
+    const scrollToInitialTarget=()=>requestAnimationFrame(()=>requestAnimationFrame(()=>initialTarget?.scrollIntoView({block:'start'})));
+    if(!initialTarget)window.scrollTo(0,0);
+    if(matchMedia('(max-width: 760px)').matches){
+      const intro=document.querySelector<HTMLElement>('.hero-intro');
+      if(intro)intro.style.display='none';
+      if(initialTarget)scrollToInitialTarget();
+      window.history.scrollRestoration=previousScrollRestoration;
+      return;
+    }
     const hero=document.querySelector<HTMLElement>('.swiss-hero');
     if(!hero||matchMedia('(prefers-reduced-motion: reduce)').matches){
       window.history.scrollRestoration=previousScrollRestoration;
@@ -53,7 +63,8 @@ export default function V2HeroMotion(){
       document.body.style.top=previousBodyTop;
       document.body.style.width=previousBodyWidth;
       document.body.style.touchAction=previousBodyTouchAction;
-      window.scrollTo(0,0);
+      if(initialTarget)scrollToInitialTarget();
+      else window.scrollTo(0,0);
       ScrollTrigger.refresh();
     };
     lockIntroScroll();
@@ -121,6 +132,7 @@ export default function V2HeroMotion(){
         .to('.swiss-disciplines',{y:0,autoAlpha:1,duration:.55},2.96)
         .to('.hero-copy',{y:0,autoAlpha:1,duration:.72},3.3)
         .to('.scroll-cue',{autoAlpha:1,duration:.5},3.46);
+      if(initialTarget)timeline.progress(1);
 
       const curve=document.querySelector<SVGPathElement>('.sweep-curve');
       const arrowZone=document.querySelector<HTMLElement>('.hero-arrow-zone');

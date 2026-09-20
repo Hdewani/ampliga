@@ -80,3 +80,5 @@
 /* Clear the sticky header when an index entry scrolls a section into view. */
 .case-section{scroll-margin-top:112px}
 @media(max-width:900px){.case-index{display:none}.case-section{scroll-margin-top:84px}}
+.case-brand-intro{max-width:760px;margin:0 0 38px 108px;color:#d7d5cf;font-size:18px;line-height:1.6}
+@media(max-width:900px){.case-brand-intro{margin:0 0 20px 40px;font-size:16px}}
