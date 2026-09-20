@@ -149,7 +149,7 @@ export default function TermsAndConditions(){
     <p className="addr">
      If you have any questions about these Terms, please contact us:<br/>
      Email: <a href="mailto:hello@ampliga.com">hello@ampliga.com</a><br/>
-     Postal: Plot No 1, Vijay Vihar, Behind Star Mall, Silokhera, Gurgaon, Haryana, India — Attn: Legal Department
+     Postal: 2318/ Tower5, county the center court , sector 88A , Gurgaon 122505, Haryana, India — Attn: Legal Department
     </p>
    </section>
   </main>

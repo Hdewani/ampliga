@@ -16,7 +16,7 @@ export default function PrivacyPolicy(){
    <p className="legal-eyebrow">Legal</p>
    <h1>Privacy <em>Policy</em></h1>
    <p className="legal-updated">Last updated: 03 September 2025</p>
-   <p className="legal-intro">This Privacy Policy explains how Ampliga (“Ampliga”, “we”, “us”, “our”) collects, uses, shares, and protects your personal information when you engage with our website and services. Website: <a href="https://www.ampliga.com/">https://www.ampliga.com/</a> · Email: <a href="mailto:hello@ampliga.com">hello@ampliga.com</a> · Registered address: Plot No 1, Vijay Vihar, Behind Star Mall, Silokhera, Gurgaon, Haryana, India.</p>
+   <p className="legal-intro">This Privacy Policy explains how Ampliga (“Ampliga”, “we”, “us”, “our”) collects, uses, shares, and protects your personal information when you engage with our website and services. Website: <a href="https://www.ampliga.com/">https://www.ampliga.com/</a> · Email: <a href="mailto:hello@ampliga.com">hello@ampliga.com</a> · Registered address: 2318/ Tower5, county the center court , sector 88A , Gurgaon 122505, Haryana, India.</p>
 
    <section>
     <h2><span className="num">01</span>Information We Collect</h2>
@@ -114,7 +114,7 @@ export default function PrivacyPolicy(){
     <p className="addr">
      Privacy queries/requests: <a href="mailto:hello@ampliga.com">hello@ampliga.com</a><br/>
      Grievance Officer (India): <a href="mailto:hello@ampliga.com">hello@ampliga.com</a><br/>
-     Postal: Plot No 1, Vijay Vihar, Behind Star Mall, Silokhera, Gurgaon, Haryana, India — Attn: Privacy
+     Postal: 2318/ Tower5, county the center court , sector 88A , Gurgaon 122505, Haryana, India — Attn: Privacy
     </p>
    </section>
   </main>
